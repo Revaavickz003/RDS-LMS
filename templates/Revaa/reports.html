@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    {{team_details.Team_Name}} Reports
+{% endblock %}
+
+{% block content %}
+    {% include 'inc/sidebar.html' %}
+    <div class="content">
+        {% include 'inc/navbar.html' %}
+        <h3>Reports for {{ team_details.Team_Name }}</h3>
+        {% for employee in team_details.Members.all %}
+            <a href="" class="btn btn-outline-primary">
+                {{ employee.Employee_Name }} Reports
+            </a>
+        {% endfor %}
+    </div>
+
+    <table class="table mt-3">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Client</th>
+            <th scope="col">Type</th>
+            <th scope="col">Task</th>
+            <th scope="col">Assigned to</th>
+            <th scope="col">Assigned by</th>
+            <th scope="col">Status</th>
+            <th scope="col">Time Taken</th>
+            <th scope="col">Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for report in reports %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ report.Date }}</td>
+                <td>{{ report.Client }}</td>
+                <td>{{ report.Types }}</td>
+                <td>{{ report.Task }}</td>
+                <td>{{ report.Assigned_to.Employee_Name }}</td>
+                <td>{{ report.Assigned_By.Employee_Name }}</td>
+                <td>{{ report.Status }}</td>
+                <td>{{ report.Time_Taken }}</td>
+                <td>{{ report.Remarks }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

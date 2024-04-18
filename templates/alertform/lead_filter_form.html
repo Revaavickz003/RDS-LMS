@@ -1,0 +1,132 @@
+<div class="modal fade" id="lead_filter_form" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        {% if All_Leads %}
+        <form action="{% url 'ledas_filter' %}" method="post">
+        {% else %}
+        <form action="{% url 'customers_filter' %}" method="post">
+        {% endif %}
+        {% csrf_token %}
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Filter Leads</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mt-3">
+                        <label for="">Company Name</label>
+                        <select class="form-multi-select" name="companyname" id="companyname" multiple data-coreui-search="true">
+                            {% for Org_Name in Org_Name reversed %}
+                            <option value="{{Org_Name.Org_Name}}">{{Org_Name.Org_Name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Company Type</label>
+                        <select class="form-multi-select" name="companytype" id="companytype" multiple data-coreui-search="true">
+                            {% for Org_Type in Org_Type reversed %}
+                            <option value="{{Org_Type.pk}}">{{Org_Type.org_type}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Location</label>
+                        <select class="form-multi-select" name="Location" id="Location" multiple data-coreui-search="true">
+                            {% for Locations in Locations reversed %}
+                            <option value="{{Locations.pk}}">{{Locations.location}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="City">City</label>
+                        <select class="form-multi-select" name="City" id="City" multiple data-coreui-search="true">
+                            {% for citys in citys reversed %}
+                            <option value="{{citys.pk}}">{{citys.city}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Lead Name</label>
+                        <select class="form-multi-select" name="leadname" id="leadname" multiple data-coreui-search="true">
+                            {% for lead_names in lead_names reversed %}
+                            <option value="{{lead_names.pk}}">{{lead_names.Lead_Name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Business Type</label>
+                        <select class="form-multi-select" name="bussinesstype" id="bussinesstype" multiple data-coreui-search="true">
+                            {% for value, label in BUSINESS_TYPE_CHOICES %}
+                                <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Product</label>
+                        <select class="form-multi-select" name="Product" id="Product" multiple data-coreui-search="true">
+                            {% for Products in Products reversed %}
+                            <option value="{{Products.pk}}">{{Products.Product_Name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Priority</label>
+                        <select class="form-multi-select" name="Priority" id="Priority" multiple data-coreui-search="true">
+                            {% for value, label in Prioritys %}
+                                <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Status</label>
+                        <select class="form-multi-select" name="Status" id="Status" multiple data-coreui-search="true">
+                            {% for value, label in Statuss %}
+                                <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Created by</label>
+                        <select class="form-multi-select" name="Createdby" id="Createdby" multiple data-coreui-search="true">
+                            {% for users in users reversed %}
+                            <option value="{{users.pk}}">{{users.first_name}} {{users.last_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Updated By</label>
+                        <select class="form-multi-select" name="Updatedby" id="Updatedby" multiple data-coreui-search="true">
+                            {% for users in users reversed %}
+                            <option value="{{users.pk}}">{{users.first_name}} {{users.last_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <label for="">Amount</label>
+                        <div class="d-flex">
+                            <div class="w-50">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input type="number" id="fromAmount" name="fromAmount" class="form-control" />
+                                    <label class="form-label" for="fromAmount">From Amount</label>
+                                </div>
+                            </div>
+                            <div class="w-50">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input type="number" id="toamount" name="toamount" class="form-control" />
+                                    <label class="form-label" for="toamount">To Amount</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn alert-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" class="btn alert-primary" value="Filter">
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

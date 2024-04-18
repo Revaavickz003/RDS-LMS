@@ -1,0 +1,172 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard | Revaa Degital Solition
+{% endblock %}
+
+{% block content %}
+{% include 'inc/messages.html' %}
+
+<div class="row">
+    <h3 class="container">Dasboard</h3>
+    <div class="col-8">
+        <div class="row mt-3">
+            <div class="col-sm-4">
+                <a href="{% url 'leads' %}">
+                    <div class="card bg-light mb-3">
+                    <div class="card-header">Over all leads</div>
+                    <div class="card-body">
+                        <h1 class="fs-1">{{over_all_leads}}</h1>
+                    </div>
+                </div>
+                </a>
+            </div>
+            <div class="col-sm-4">
+                <div class="card bg-light border-secondary mb-3">
+                    <div class="card-header">Without customer</div>
+                    <div class="card-body d-flex" style="display: flex; align-items: start; justify-content: space-between;">
+                        <h1 class="fs-1">{{with_out_customer}}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <a href="{% url 'coustomer' %}">
+                    <div class="card bg-light border-secondary mb-3">
+                        <div class="card-header">Over all customers</div>
+                        <div class="card-body">
+                            <h1 class="fs-1">{{over_all_customer}}</h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row mt-4">
+                        <div class="col-md-12" id="leads-column">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <ul class="nav nav-tabs mb-3" id="myTab0" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button data-mdb-tab-init class="nav-link p-3 px-4 active" id="home-tab0"
+                                            data-mdb-target="#home0" type="button" role="tab" aria-controls="home"
+                                            aria-selected="true"> Customer Product Chart
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button data-mdb-tab-init class="nav-link" id="profile-tab0" data-mdb-target="#profile0"
+                                            type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                            Lead Product Chart
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <section class="cd__main p-0">
+                                <div class="tab-content" id="myTabContent0">
+                                    <div class="tab-pane fade show active" id="home0" role="tabpanel" aria-labelledby="home-tab0">
+                                        <canvas id="customerProductChart" style="width: 50vw;"></canvas>
+                                    </div>
+                                    <div class="tab-pane fade" id="profile0" role="tabpanel" aria-labelledby="profile-tab0">
+                                        <canvas id="leadProductChart" style="width: 50vw;"></canvas>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Lead Product data
+            var leadProducts = {{ lead_products|safe }};
+            var leadProductCounts = {{ lead_product_counts|safe }};
+        
+            // Get the chart canvas for lead products
+            var leadCtx = document.getElementById('leadProductChart').getContext('2d');
+        
+            // Create the lead product chart
+            var leadProductChart = new Chart(leadCtx, {
+                type: 'bar',
+                data: {
+                    labels: leadProducts,
+                    datasets: [{
+                        label: 'Lead product counts',
+                        data: leadProductCounts,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)', // Blue color with transparency
+                        borderColor: 'rgba(54, 162, 235, 1)', // Solid blue color for border
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true // Start y-axis at 0
+                        }
+                    }
+                }
+            });
+        
+            // Customer Product data
+            var customerProducts = {{ customer_products|safe }};
+            var customerProductCounts = {{ customer_product_counts|safe }};
+        
+            // Get the chart canvas for customer products
+            var customerCtx = document.getElementById('customerProductChart').getContext('2d');
+        
+            // Create the customer product chart
+            var customerProductChart = new Chart(customerCtx, {
+                type: 'bar',
+                data: {
+                    labels: customerProducts,
+                    datasets: [{
+                        label: 'Customer product counts',
+                        data: customerProductCounts,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)', // Blue color with transparency
+                        borderColor: 'rgba(54, 162, 235, 1)',// Solid red color for border
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true // Start y-axis at 0
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+    <div class="col-4">
+        <h5 class="mb-4">Recent actions</h5>
+        <div class="row">
+            {% for Recent_action in Recent_actions %}
+            <div class="col-12">
+                <div class="d-flex mt-2" style="align-items: start;">
+                    <i class="after-icon fas fa-edit bg-gray text-xs me-3 fs-6 p-3" style="border-radius: 50%; border: 1px solid gray;"></i>
+                    <div class="timeline-item bg-dark w-100 p-3 text-light" style="border-radius: 0 10px 10px 10px;">
+                        <p class="time text-secondary" style="font-size: small;"><i class="fas fa-clock"></i> {{Recent_action.timestamp}}</p>
+                        <h5 class="timeline-header no-border">
+                            <a href="">
+                                {% if Recent_action.lable %}
+                                    {{Recent_action.lable}}
+                                {% else %}
+                                    {{Recent_action.user.username}}
+                                {% endif %}
+                            </a>
+                        </h5>
+                        <div class="timeline-body">
+                            <ul style="list-style: none; padding: 0;">
+                                <li>{{Recent_action.action}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

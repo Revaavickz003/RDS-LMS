@@ -1,0 +1,68 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}
+Customer Page | Revaa Digital Solution
+{% endblock %}
+
+{% block content %}
+{% include 'inc/messages.html' %}
+<section class="content">
+  <h4>Customers Page</h4>
+  <div class="d-flex align-items-center justify-content-between my-4 ">
+    {% if All_Customers %}
+    {% include 'alertform/lead_filter_form.html' %}
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#lead_filter_form"> filter the lead
+      table </button>
+    {% endif %}
+    <div>
+      {% include 'alertform/new_customer.html' %}
+      <button type="button" class="btn btn-link btn-sm btn-rounded bg-light" data-toggle="modal"
+        data-target="#new_Leads_add_container"> New Customer </button>
+        {% include 'alertform/import_data.html' %}
+        <button type="button" class="btn btn-link btn-sm btn-rounded bg-light" data-toggle="modal" data-target="#importdata">
+            Import
+            data </button>
+        {% if All_Customers %}
+        <a type="button" class="btn btn-link btn-sm btn-rounded bg-light" href="{% url 'export_customer' %}">Export data</a>
+        {% endif %}
+    </div>
+  </div>
+  <hr>
+  {% if All_Customers %}
+  <table id="example" class="table table-striped" style="width:100%">
+    <thead>
+      <tr>
+        <th class="p-2">S.No <i class='bx bx-sort text-primary'></i></th>
+        <th class="p-2">Company Name <i class='bx bx-sort text-primary'></i></th>
+        <th class="p-2">Client Name <i class='bx bx-sort text-primary'></i></th>
+        <th class="p-2">Client Number <i class='bx bx-sort text-primary'></i></th>
+        <th class="p-2">Call Back <i class='bx bx-sort text-primary'></i></th>
+        <th class="p-2">Date Of Join</th>
+        <th class="p-2">Product <i class='bx bx-sort text-primary'></i></th>
+        <th class="p-2">Status <i class='bx bx-sort text-primary'></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for lead in All_Customers reversed%}
+      <tr>
+        <td class="p-2">{{forloop.counter}}</td>
+        <td class="p-2"><a href="{% url 'editcustomer' pk=lead.pk %}">{{lead.org_name}}</a></td>
+        <td class="p-2">{{lead.client_name}}</td>
+        <td class="p-2">{{lead.client_number}}</td>
+        <td class="p-2">{{lead.follow_up}}</td>
+        <td class="p-2">{{lead.created_date}}</td>
+        <td class="p-2">
+          {% for product in lead.products.all %}
+          {{ product }}
+          {% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </td>
+        <td class="p-2">{{lead.status}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</section>
+{% endblock %}

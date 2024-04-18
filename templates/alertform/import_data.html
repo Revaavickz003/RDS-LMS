@@ -1,0 +1,103 @@
+<div class="modal fade" id="importdata" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Import 
+                    {% if All_Leads %}
+                    leads
+                    {% else %}
+                    customer
+                    {% endif %}
+                    data
+                    </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="content">
+                    <div class="container-fluid">
+                        <section id="content" class="content">
+                            <div class="row">
+                                <div class="col-12">
+                                    {% if All_Leads %}
+                                    <form action="{% url 'lead_import' %}" method="post" enctype="multipart/form-data">
+                                        {% else %}
+                                        <form action="{% url 'customer_import' %}" method="post" enctype="multipart/form-data">
+                                            {% endif %}
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-12 col-lg-9">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <div class="card-title">
+                                                                Import 
+                                                                {% if All_Leads %}
+                                                                leads
+                                                                {% else %}
+                                                                customer
+                                                                {% endif %}
+                                                                .xlsx only
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="form-group field-name">
+                                                                <div class="row">
+
+                                                                    <div class="col-sm-2 text-left">
+                                                                        <label for="id_import_file">File to
+                                                                            import:</label>
+                                                                    </div>
+                                                                    <div class="col-sm-10 text-left">
+                                                                        <input type="file" name="import_file"
+                                                                            class="guess_format form-control w-50"
+                                                                            required="" id="id_import_file">
+                                                                    </div>
+
+                                                                    <div class="help-block red">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12 col-lg-9">
+                                                                <p>
+                                                                    <b>This importer will import the following fields:
+                                                                    </b>
+                                                                </p>
+                                                                <ul>
+
+                                                                </ul>
+                                                                <p></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-lg-3">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <p class="card-title">
+                                                                <i class="fas fa-edit"></i>
+                                                                Actions
+                                                            </p>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <input type="submit" class="btn btn-success w-100"
+                                                                    name="confirm" value="Submit">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+{% load static %}
+<header class="header body-pd" id="header">
+    <div class="header_toggle">
+        <i class='bx bx-menu bx-x' id="header-toggle"></i>
+    </div>
+    <div class="d-flex align-items-center">
+        <span class="me-3">{{user.first_name}} {{user.last_name}}</span>
+        <div class="header_img">
+            {%if user.employee_photo %}
+            <img src="{{user.employee_photo.url}}" alt="">
+            {% else %}
+            <img src="{% static 'images/userpng.png' %}" alt="">
+            {% endif %}
+        </div>
+    </div>
+
+</header>
+<div class="l-navbar showing" id="nav-bar">
+    <nav class="nav">
+        <div> 
+            <a href="{% url 'crmdashboard' %}" class="nav_logo"> 
+                <img src="{% static 'images/Revaa-new-logo-white.png' %}" alt="" width="90">
+                 <!-- <span class="nav_logo-name">Revaa</span>  -->
+            </a>
+            <div class="nav_list"> 
+                <a href="{% url 'crmdashboard' %}" class="nav_link {{leaddashbord}}"> 
+                    <i class='bx bx-grid-alt nav_icon'></i> 
+                    <span class="nav_name">CRM Dashboard</span> 
+                </a> 
+                <a href="{% url 'leads' %}" class="nav_link {{leads}}"> 
+                    <i class='bx bx-user nav_icon'></i> 
+                    <span class="nav_name">Leads</span> 
+                </a>
+                <a href="{% url 'coustomer' %}" class="nav_link {{customer}}"> 
+                    <i class='bx bx-user nav_icon'></i> 
+                    <span class="nav_name">Customers</span> 
+                </a>
+            </div>
+        </div> 
+        <a href="{% url 'logout_page' %}" class="nav_link"> 
+            <i class='bx bx-log-out nav_icon'></i> 
+            <span class="nav_name">SignOut</span> 
+        </a>
+    </nav>
+</div>

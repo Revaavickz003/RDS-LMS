@@ -1,0 +1,172 @@
+{% extends 'main.html' %}
+
+{% block title %}
+Setting | Revaa Degital Solition
+{% endblock %}
+
+{% block content %}
+{% include 'inc/messages.html' %}
+<div class="container">
+  <input type="text" class="form-control col-4 mb-4" placeholder="Search.." id="searchInput">
+  <h4 class="mb-3">Office Setup</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, placeat tempora. Beatae quod ipsum
+    molestiae corrupti totam, a iure mollitia debitis et, dignissimos deleniti corporis.
+  </p>
+  <hr>
+  <section class="mb-4">
+    <div class="deporment">
+      <h4 class="mb-3">Roles</h4>
+      {% include 'alertform/new_role_form.html' %}
+      <p class="mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi, quam. <button type="button"
+          class="btn btn-link btn-sm btn-rounded" data-toggle="modal" data-target="#new_role_form_container">
+          New Role Create
+        </button> </p>
+      {% if Roles %}
+      <table class="w-50">
+        <thead>
+          <tr>
+            <th scope="col">Roles</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for Role in Roles %}
+          <tr>
+            <td>{% if not Role.is_active %}
+              <del>
+                {% endif %}
+                {{Role.role_name}}
+                {% if Role.is_active %}
+              </del>
+              {% endif %}
+            </td>
+            <td>
+              <button type="button" class="btn btn-link btn-sm btn-rounded" data-toggle="modal"
+                data-target="#{{ Role.role_name|slugify|lower }}">
+                Edit
+              </button>
+            </td>
+            {% include 'alertform/update_role_form.html' %}
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+    <hr class="mt-5">
+  </section>
+  <section class="mb-4">
+    <div class="deporment">
+      <h4 class="mb-3">Department</h4>
+      {% include 'alertform/new_deportment_form.html' %}
+      <p class="mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi, quam. <button type="button"
+          class="btn btn-link btn-sm btn-rounded" data-toggle="modal" data-target="#new_deportment_form_container">
+          New Deportment Create
+        </button> </p>
+      {% if Departments %}
+      <table class="w-50">
+        <thead>
+          <tr>
+            <th scope="col">Deportments</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for Department in Departments %}
+          <tr>
+            <td>{{Department.department_name}}</td>
+            <td>
+              <button type="button" class="btn btn-link btn-sm btn-rounded" data-toggle="modal"
+                data-target="#{{ Department.department_name|slugify|lower }}">
+                Edit
+              </button>
+            </td>
+            {% include 'alertform/update_deportment_form.html' %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+    <hr class="mt-5">
+  </section>
+  <section class="mb-4">
+    <div class="deporment">
+      <h4 class="mb-3">Position</h4>
+      {% include 'alertform/new_position_form.html' %}
+      <p class="mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi, quam. <button type="button"
+          class="btn btn-link btn-sm btn-rounded" data-toggle="modal" data-target="#new_position_form_container">
+          New position Create
+        </button> </p>
+      {% if Positions %}
+      <table class="w-50">
+        <thead>
+          <tr>
+            <th scope="col">Position</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for Position in Positions %}
+          <tr>
+            <td>{{Position.Position_Name}}</td>
+            <td>
+              <button type="button" class="btn btn-link btn-sm btn-rounded" data-toggle="modal"
+                data-target="#{{Position.Position_Name|slugify|lower}}">
+                Edit
+              </button>
+            </td>
+            {% include 'alertform/update_postion_form.html' %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+    <hr class="mt-5">
+  </section>
+
+  <h4 class="">Teams</h4>
+  {% include 'alertform/new_team_form.html' %}
+  <p class="mb-3">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi, quam. 
+    <button type="button"
+      class="btn btn-link btn-sm btn-rounded" data-toggle="modal" data-target="#new_team_form_container">
+      New Team create
+    </button> </p>
+
+    <div class="">
+      <div class="row">
+        {% for Team in Teams %}
+        <div class="col-sm-4 mb-3">
+          <div class="car/d">
+            <div class="card-body">
+              <h5 class="card-title">{{forloop.counter}}. {{ Team.team_name }}</h5>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </p>
+  <hr>
+  <h4 class="mb-3">Mode</h4>
+  <input type="button" class="btn btn-light mb-3" value="Lignt"><br>
+  <input type="button" class="btn btn-dark mb-3" value="Lignt">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, placeat tempora. Beatae quod ipsum
+    molestiae corrupti totam, a iure mollitia debitis et, dignissimos deleniti corporis.
+  </p>
+
+  <hr>
+  <h4 class="mb-3">CheckOut</h4>
+  <a href="{% url 'logout_page' %}" class="btn btn-primary mb-3">Logout</a>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, placeat tempora. Beatae quod ipsum
+    molestiae corrupti totam, a iure mollitia debitis et, dignissimos deleniti corporis.
+  </p>
+</div>
+
+{% endblock %}
+
+
+

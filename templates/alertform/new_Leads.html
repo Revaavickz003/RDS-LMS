@@ -1,0 +1,195 @@
+<div class="modal fade" id="new_Leads_add_container" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Create Lead</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="row mt-4 mb-4">
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input type="text" id="Client_name" name="Client_name" class="form-control" />
+                                    <label class="form-label" for="form12">Client Name</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input type="number" id="Client_number" name="Client_number" class="form-control" />
+                                    <label class="form-label" for="form12">Client Number</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input type="text" id="Company_name" name="Company_name" class="form-control" />
+                                    <label class="form-label" for="form12">Company Name</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input list="company_names" id="Company_type" name="Company_type" class="form-control" />
+                                    <label class="form-label" for="Company_type">Select Company Type</label>
+                                    <datalist id="company_names">
+                                        {% for Org_Type in Org_Type %}
+                                        <option value="{{Org_Type.org_type}}">
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input list="location_names" id="location" name="location" class="form-control" />
+                                    <label class="form-label" for="location">Select Location</label>
+                                    <datalist id="location_names">
+                                        <option value="">Select Location</option>
+                                        {% for Location in Locations %}
+                                        <option value="{{ Location.location }}">
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input list="city_names" id="city" name="city" class="form-control" />
+                                    <label class="form-label" for="city">Select City</label>
+                                    <datalist id="city_names">
+                                        <option value="">Select City</option>
+                                        {% for city in citys %}
+                                        <option value="{{ city.city }}">
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input list="lead_names" id="Lead_Name" name="lead_name" class="form-control" />
+                                    <label class="form-label" for="Lead_Name">Lead Name</label>
+                                    <datalist id="lead_names">
+                                        <option value="">Lead Name</option>
+                                        {% for lead_name in lead_names %}
+                                        <option value="{{ lead_name.Lead_Name }}">
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input list="business_types" id="bussinesstype" name="bussinesstype" class="form-control" />
+                                    <label class="form-label" for="bussinesstype">Business Type</label>
+                                    <datalist id="business_types">
+                                        <option value="">Business Type</option>
+                                        {% for value, label in BUSINESS_TYPE_CHOICES %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-4 d-flex align-items-center justify-content-between">
+                            <select class="form-multi-select w-100" name="products" id="products" multiple data-coreui-search="true">
+                                {% for Product in Products %}
+                                <option value="{{Product.Product_Name}}">{{Product.Product_Name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input type="number" id="Amount" name="Amount" class="form-control" />
+                                    <label class="form-label" for="form12">Amount</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input type="date" id="enddate" name="enddate" class="form-control" />
+                                    <label class="form-label" for="form12">End Date</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input list="priority_options" id="Prioritys" name="Prioritys" class="form-control" />
+                                    <label class="form-label" for="Prioritys">Priority</label>
+                                    <datalist id="priority_options">
+                                        <option value="">Priority</option>
+                                        {% for value, label in Prioritys %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input type="email" id="email" name="email" class="form-control" />
+                                    <label class="form-label" for="form12">Email</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input list="status_options" id="satus" name="satus" class="form-control" />
+                                    <label class="form-label" for="satus">Select Status</label>
+                                    <datalist id="status_options">
+                                        <option value="">Select Status</option>
+                                        {% for value, label in Statuss %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="mb-4">
+                                <div class="form-outline" data-mdb-input-init>
+                                    <input type="date" id="callbackdate" name="callbackdate" class="form-control" />
+                                    <label class="form-label" for="form12">Call Back Date</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-outline" data-mdb-input-init>
+                                <textarea class="form-control" id="comments" name="comments" rows="4"></textarea>
+                                <label class="form-label" for="comments">Message</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-outline" data-mdb-input-init>
+                                <textarea class="form-control" id="Remarks" name="Remarks" rows="4"></textarea>
+                                <label class="form-label" for="Remarks">Remark</label>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="Create">
+            </div>
+                </form>
+        </div>
+    </div>
+</div>

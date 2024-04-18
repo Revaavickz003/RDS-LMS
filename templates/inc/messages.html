@@ -1,0 +1,27 @@
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert
+      {% if 'error' in message.tags %}
+        alert-danger
+      {% elif 'info' in message.tags %}
+        alert-info
+      {% else %}
+        alert-primary
+      {% endif %}
+      alert-dismissible fade show w-100" role="alert">
+      <button type="button" class="btn-close" aria-label="Close"></button>
+      {{ message }}
+    </div>
+  {% endfor %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var alertList = document.querySelectorAll(".alert");
+      alertList.forEach(function(alert) {
+        alert.querySelector(".btn-close").addEventListener("click", function() {
+          alert.classList.add("d-none");
+        });
+      });
+    });
+  </script>
+{% endif %}

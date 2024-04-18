@@ -1,0 +1,109 @@
+{% extends 'main.html' %}
+
+{% block title %}
+{{team_details.team_name}} Team
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .teamname::after {
+        content: "";
+        display: block;
+        height: 5px;
+        margin: 10px 0 3rem 0;
+        border-bottom: 5px solid #007dd1;
+        width: 75%;
+        border-radius: 50px;
+    }
+</style>
+
+<section class="container">
+    <h5 class="teamname" style="width: fit-content;">{{team_details.team_name}}</h5>
+    {% if False %}
+    <div class="clent-container mt-3">
+        <p>Project list</p>
+        <table class="">
+            <thead>
+                <tr>
+                    <th class="p-1">Clients</th>
+                    <th class="p-1">Projects</th>
+                    <th class="p-1">Status</th>
+                    <th class="p-1">Billing Hours</th>
+                    <th class="p-1">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <td class="p-1">Vignesh</td>
+                <td class="p-1">Inlingua</td>
+                <td class="p-1">5</td>
+                <td class="p-1">4500</td>
+                <td class="p-1">On Process</td>
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    <div class="team-status mt-5">
+        <div class="d-flex align-items-end justify-content-between">
+            <p class="m-0 p-0">Team members</p>
+            <a href="{% url 'calendar_view' %}" style="width: fit-content;"
+                class="btn btn-outline-primary {{Calendar}}">
+                <span>Task assigne</span>
+            </a>
+        </div>
+        {% if team_members %}
+        <table class="table table-striped nowrap mt-3" >
+            <thead>
+                <tr>
+                    <th class="p-2">S.NO</th>
+                    <th class="p-2">Employee Id</th>
+                    <th class="p-2">Teamets Name</th>
+                    <th class="p-2">Mobile Number</th>
+                    <th class="p-2">Status</th>
+                    <th class="p-2">Today Tasks</th>
+                    <th class="p-2">Complited Tasks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in team_members %}
+                <tr>
+                    <td class="p-2">
+                        {{forloop.counter}}
+                    </td>
+                    <td class="p-2">
+                        <a href="{% url 'show_history' employeeid=user.username employeename=user.first_name %}">{{user.username}}</a>
+                    </td>
+                    <td class="p-2">
+                        {% if user.is_teamlead %}
+                        <span class="badge badge-success mx-2"> TL </span>
+                        {%  else %}
+                        <span class="badge badge-primary mx-2"> TM </span>
+                        {% endif %}
+                        {{user.first_name}} {{user.last_name}} 
+                    </td>
+                    <td class="p-2">
+                        {{user.employee_mobile_number}}
+                    </td>
+                    <td class="p-2">
+                        {% if user.is_active %}
+                        <span class="badge badge-success">Active</span>
+                        {% else %}
+                        <span class="badge badge-danger">Do Not Distrub</span> 
+                        {% endif %}
+                    </td>
+                    <td class="p-2">
+                        5
+                    </td>
+                    <td class="p-2">
+                        1
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+
+</section>
+
+{% endblock %}

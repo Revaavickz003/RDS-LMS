@@ -1,0 +1,133 @@
+body {
+  background-color: #fbfbfb;
+}
+@media (min-width: 991.98px) {
+  main {
+    padding-left: 240px;
+  }
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding: 58px 0 0; /* Height of navbar */
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+  width: 240px;
+  z-index: 600;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar {
+    width: 100%;
+  }
+}
+.sidebar .active {
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+
+/*  */
+/* Calender */
+/*  */
+
+.calendard {
+  border-collapse: collapse;
+  width: 100%;
+  height: 100vh;
+}
+.calendard th,
+.calendard td {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 8px;
+}
+.calendard td{
+  position: relative;
+}
+.calendard td > a{
+  outline: none;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(250, 250, 250);
+}
+.calendard td .Notes{
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+.calendard td .Notes>button{
+  outline: none;
+  border: 1px solid rgb(245, 245, 245);
+  background-color: transparent;
+}
+.calendard td p{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: start;
+}
+
+.calendard th {
+  background-color: #f2f2f2;
+}
+
+
+/* ====== */
+/* Table */
+/* ====== */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid rgb(214, 214, 214) !important;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* ------------------------------ */
+/* ------------leads------------- */
+/* ------------------------------- */
+.dataTables_filter {
+  float: right;
+  width: 50%;
+}
+.dataTables_filter label{width: 100% !important;}
+.form-control-sm{
+  font-size: 1rem !important;
+  width: 100% !important;
+}
+.dataTables_filter label{width: 100% !important;}
+.dataTables_filter label input{font-size: 1rem !important;}

@@ -1,0 +1,204 @@
+{% load static %}
+<div class="d-flex align-items-center  justify-content-between">
+    
+<form action="{% url 'editcustomer' pk=get_data.pk %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+    <div class="d-flex align-items-end justify-content-between">
+        <div style="position: relative;">
+            <div class="profile-pic">
+                <label class="label" for="file">
+                    <span><i class='bx bx-pencil fs-5'></i></span>
+                </label>
+                <input id="file" type="file" name="company_logo" hidden onchange="loadFile(event)"/>
+                {% if get_data.org_img %}
+                <img src="{{ get_data.org_img.url }}" id="output" width="150" />
+                {% else %}
+                <img src="{% static 'images/fav-icon.png' %}" id="output" width="150" />
+                {% endif %}
+            </div>
+            <style>
+                .profile-pic {
+                    display: inline-block;
+                    position: relative;
+                    width: 150px; /* Adjust as needed */
+                    height: 150px; /* Adjust as needed */
+                    border-radius: 50%;
+                    overflow: hidden;
+                    box-shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+                }
+            
+                .profile-pic img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            
+                .label {
+                    cursor: pointer;
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: rgba(0, 0, 0, .8);
+                    color: white;
+                    padding: 4px 8px;
+                    border-radius: 5px;
+                    transition: background-color .2s ease-in-out;
+                }
+            
+                .label:hover {
+                    background-color: rgba(0, 0, 0, .6);
+                }
+            </style>
+            
+            <script>
+                var loadFile = function (event) {
+                    var image = document.getElementById("output");
+                    image.src = URL.createObjectURL(event.target.files[0]);
+                };
+            </script>
+        </div>    
+        <div>
+            <h1 class="mx-4">{{get_data.org_name}}</h1>
+        </div>
+    </div>
+</div>
+    <section class="container py-3 px-2 mt-5">
+        <div class="row justify-content-between text-start">
+            <div class="col-md-6 col-lg-6 mb-4 mb-lg-0 d-none d-lg-block">
+                <h5>Client Details</h5>
+                <div class="mt-4">
+                    <div class="form-outline mb-4" data-mdb-input-init>
+                        <input type="text" id="clentname" class="form-control form-control-lg" name="client_name" value="{{get_data.client_name}}" />
+                        <label class="form-label" for="clentname">Clent Name</label>
+                    </div>
+                    <div class="form-outline mb-4" data-mdb-input-init>
+                        <input type="number" id="formControlLg" class="form-control form-control-lg" name="client_number" value="{{get_data.client_number}}" />
+                        <label class="form-label" for="formControlLg">Client Number</label>
+                    </div>
+                    <div class="form-outline mb-4" data-mdb-input-init>
+                        <input type="email" id="formControlLg" class="form-control form-control-lg" name="email"
+                            value="{{get_data.mail_id}}" />
+                        <label class="form-label" for="formControlLg">Email</label>
+                    </div>
+                    <div class="mb-4">
+                        <div class="form-outline" data-mdb-input-init>
+                            <input list="company_names" id="Company_type" name="Company_type" class="form-control" value="{{get_data.org_type}}"/>
+                            <label class="form-label" for="Company_type">Select Company Type</label>
+                            <datalist id="company_names">
+                                {% for Org_Type in Org_Type %}
+                                <option value="{{Org_Type.org_type}}">
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="form-outline" data-mdb-input-init>
+                            <input list="location_names" id="location" name="location" class="form-control"  value="{{get_data.location}}" />
+                            <label class="form-label" for="location">Select Location</label>
+                            <datalist id="location_names">
+                                <option value="">Select Location</option>
+                                {% for Location in Locations %}
+                                <option value="{{ Location.location }}">
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="form-outline" data-mdb-input-init>
+                            <input list="city_names" id="city" name="city" class="form-control" value="{{get_data.city}}" />
+                            <label class="form-label" for="city">Select City</label>
+                            <datalist id="city_names">
+                                <option value="">Select City</option>
+                                {% for city in citys %}
+                                <option value="{{ city.city }}">
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="form-outline" data-mdb-input-init>
+                            <input list="lead_names" id="Lead_Name" name="lead_name" class="form-control" value="{{get_data.lead_name}}"/>
+                            <label class="form-label" for="Lead_Name">Lead Name</label>
+                            <datalist id="lead_names">
+                                <option value="">Lead Name</option>
+                                {% for lead_name in lead_names %}
+                                <option value="{{ lead_name.Lead_Name }}">
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="form-outline" data-mdb-input-init>
+                        <textarea class="form-control" id="comments" name="comments" rows="2">{{get_data.comment}}</textarea>
+                        <label class="form-label" for="comments">Message</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 mb-lg-0 d-none d-lg-block">
+                <h5>Product Details</h5>
+                <div class="mt-4">
+                    <div class="form-outline mb-4" data-mdb-input-init>
+                        <input type="number" id="amount" name="amount" class="form-control form-control-lg" value="{{get_data.amount}}" />
+                        <label class="form-label" for="form12">Amount</label>
+                    </div>
+                    <select class="form-multi-select w-100 mb-4" name="products" id="products" multiple data-coreui-search="true">
+                        {% for Product in Products %}
+                            <option value="{{ Product.Product_Name }}" {% if Product in get_data.products.all %} selected {% endif %}>{{ Product.Product_Name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="form-outline mb-4" data-mdb-input-init>
+                        <input type="" id="enddate" name="enddate" class="form-control form-control-lg" value="{{ formatted_end_of_date }}" />
+                        <label class="form-label" for="form12">End Date</label>
+                    </div>
+                    <div class="mb-4">
+                        <div class="form-outline" data-mdb-input-init>
+                            <input list="priority_options" id="Prioritys" name="Prioritys" class="form-control" value="{{get_data.priority}}" />
+                            <label class="form-label" for="Prioritys">Priority</label>
+                            <datalist id="priority_options">
+                                <option value="">Priority</option>
+                                {% for value, label in Prioritys %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="form-outline" data-mdb-input-init>
+                            <input list="status_options" id="satus" name="satus" class="form-control" value="{{get_data.status}}" />
+                            <label class="form-label" for="satus">Select Status</label>
+                            <datalist id="status_options">
+                                <option value="">Select Status</option>
+                                {% for value, label in Statuss %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="form-outline mb-4" data-mdb-input-init>
+                        <input id="callbackdate" name="callbackdate" class="form-control form-control-lg" value="{{formatted_follow_up}}"/>
+                        <label class="form-label" for="form12">Call Back Date</label>
+                    </div>
+                    <div class="mb-4">
+                        <div class="form-outline" data-mdb-input-init>
+                            <input list="business_types" id="bussinesstype" name="bussinesstype" class="form-control" value="{{get_data.business_type}}" />
+                            <label class="form-label" for="bussinesstype">Business Type</label>
+                            <datalist id="business_types">
+                                <option value="">Business Type</option>
+                                {% for value, label in BUSINESS_TYPE_CHOICES %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="form-outline" data-mdb-input-init>
+                        <textarea class="form-control" id="Remarks" name="remarks" rows="2">{{get_data.remarks}}</textarea>
+                        <label class="form-label" for="Remarks">Remark</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="d-flex align-items-center justify-content-end mb-3">
+        <button type="submit" class="btn btn btn-primary mx-2">Save Changes</button>
+    </div>
+</form>

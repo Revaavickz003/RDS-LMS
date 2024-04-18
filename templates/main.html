@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{% static 'css/pagenation.css'  %}" /> -->
+    <!-- <link rel="stylesheet" href="{% static 'css/demo.css'  %}" /> -->
+    <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.0-rc-2/dist/css/coreui.min.css" rel="stylesheet" integrity="sha384-3FeBAJJer0hMkSUFY0O4q1U6Di0w7FL7dmFaei7DXhirO8frz7qUqV5r1c2WWezh" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.0.0-rc.2/dist/css/coreui.min.css" rel="stylesheet" integrity="sha384-ry0/VADFZoMb+nqZUTCl4BKR2Tf8jjcAQf5gGULlcwkePPL1I8e20WTTUopDjrx6" crossorigin="anonymous">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/customstyle.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'images/fav-icon.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'css/new_sidebar.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css"rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <title>{% block title %}{% endblock %}</title>
+    {% block css %}{% endblock %}
+</head>
+
+<body id="body-pd" class="body-pd">
+    {% block login %}
+    {% endblock %}
+    {% include 'inc/new_sidebar.html' %}
+    <div class="bg-light" style="margin-top: 6rem;">
+            {% block content %}
+            {% endblock %}
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.0-rc-2/dist/js/coreui.bundle.min.js" integrity="sha384-IdPyRVtf8Bx60pCtleeuTZDV17yrPAvxrtQd8mS4v/MzrR5XB9G+9uonSYVJ1MZK" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui-pro@5.0.0-rc.2/dist/js/coreui.bundle.min.js" integrity="sha384-aGTCMmOaT4om0+lHGIaFUYKB+b7cRjX9/j/rq19umAyp+xKEAePEeVcH3pTxkVbu" crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/new_sidebar.js' %}"></script>
+
+    <!-- ---- -->
+    <!-- jQuery -->
+    <script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+    <!-- Data Table JS -->
+    <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
+    <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
+    <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+</body>
+
+</html>
