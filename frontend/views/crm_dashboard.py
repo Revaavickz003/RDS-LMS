@@ -31,6 +31,6 @@ def maindashbord_page_view(request):
         'over_all_customer': customertable.objects.all().count(),
         'convert_to_customer': Lead.objects.filter(is_customer=True).count(),
         'with_out_customer': Lead.objects.filter(is_customer=False).count(),
-        'Recent_actions': UserActivity.objects.filter(user=request.user).select_related('user')[::-1][:4]
+        'Recent_actions': UserActivity.objects.filter(user=request.user).select_related('user')[::-1][:5]
     }
     return render(request, 'Revaa/crm_index.html', context)

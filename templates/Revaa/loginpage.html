@@ -1,20 +1,15 @@
-
-{% extends 'main.html' %}
-
-{% block title %}
-    Dashboard | Revaa Degital Solition
-{% endblock %}
-
-{% block login %}
-<style>
-  input:valid + label {
-    clear: red;
-}
-  main{
-    margin: 0 !important;
-  }
-</style>
-<section class="bg-dark h-100">
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'images/fav-icon.png' %}" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css"rel="stylesheet"/>
+    <title>Login Page | Revaa digital solutions</title>
+</head>
+<body class="p-0 m-0">
+  <section class="bg-dark h-100">
     <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%); height: 100vh;">
       <div class="container h-100 d-flex align-item-center justify-content-center">
         <div class="row  align-items-center">
@@ -24,23 +19,22 @@
               <span class="text-primary">for your business</span>
             </h1>
           </div>
-          
           <div class="col-lg-6 mb-5 mb-lg-0">
             <div class="card">
               <div class="card-body py-5 px-md-5">
                 <form method="post" action="{% url 'login' %}">
                   {% csrf_token %}
-
-                <div class="form-outline mb-4" data-mdb-input-init>
+  
+                  <div class="form-outline mb-4" data-mdb-input-init>
                     <input type="text" id="emailinput" class="form-control form-control-lg" name="emailinput" />
                     <label class="form-label" for="emailinput">EmployeeId (or) Email</label>
-                </div>
-            
-                <!-- Password input -->
-                <div class="form-outline mb-4" data-mdb-input-init>
+                  </div>
+  
+                  <!-- Password input -->
+                  <div class="form-outline mb-4" data-mdb-input-init>
                     <input type="password" id="passwordinput" class="form-control form-control-lg" name="passwordinput" />
                     <label class="form-label" for="passwordinput">Password</label>
-                </div>
+                  </div>
   
                   <!-- Checkbox -->
                   <div class="form-check d-flex  mb-4 ">
@@ -54,7 +48,7 @@
                   <button type="submit" class="btn btn-primary btn-block mt-4">
                     Log In
                   </button>
-                  
+  
                 </form>
               </div>
             </div>
@@ -64,8 +58,6 @@
     </div>
     <!-- Jumbotron -->
   </section>
-  <!-- Section: Design Block -->
-{% endblock %}
-
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script>
+</body>
 
