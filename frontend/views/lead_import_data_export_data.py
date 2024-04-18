@@ -1,10 +1,12 @@
 from django.contrib import messages
 from django.shortcuts import redirect
-from frontend.models import Lead, OrgName, OrgType, Location, City, LeadTable, ProductTable
+from frontend.models import Lead, OrgName, OrgType, Location, City, LeadTable, ProductTable, UserActivity
 import pandas as pd
 from datetime import datetime
 from django.http import HttpResponse
 from openpyxl import Workbook
+from django.utils import timezone
+from django.contrib.contenttypes.models import ContentType
 
 def LeadImportView(request):
     if request.method == 'POST':
@@ -93,8 +95,17 @@ def LeadImportView(request):
                             org_name=new_company,
                         )
                         new_lead.products.set(selected_products)
-                        print("Yes success")
-
+                        
+                        # Create a new lead history entry
+                        UserActivity.objects.create(
+                        user=request.user,
+                        timestamp=timezone.now(),
+                        lable = f"{new_lead.org_name}",
+                        action="created lead",
+                        content_type=ContentType.objects.get_for_model(Lead),
+                        object_id=new_lead.pk,
+                    )
+                        
                     except Exception as e:
                         messages.error(request, f"Error creating lead on row {index + 2}: {str(e)}")
                         continue

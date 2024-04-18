@@ -2,8 +2,10 @@ import os
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from frontend.models import Lead, customertable
+from frontend.models import Lead, customertable, UserActivity
 from django.contrib import messages
+from django.utils import timezone
+from django.contrib.contenttypes.models import ContentType
 
 @login_required(login_url='/login/')
 def convert_customer(request, id):
@@ -57,8 +59,17 @@ def convert_customer(request, id):
 
         # Save the new customer instance after adding products
         new_customer.save()
+          # Create a new lead history entry
+        UserActivity.objects.create(
+        user=request.user,
+        timestamp=timezone.now(),
+        lable = f"{new_customer.org_name}",
+        action="Convert lead to customer",
+        content_type=ContentType.objects.get_for_model(customertable),
+        object_id=new_customer.pk,
+        )
 
-        return redirect(reverse('editlead', kwargs={'pk': get_data.pk, 'leadname': get_data.org_name}))
+        return redirect(reverse('editlead', kwargs={'pk': get_data.pk}))
     except Exception as e:
         messages.error(request, f"Error occurred while converting lead to customer: {e}")
         return redirect(reverse('leads'))

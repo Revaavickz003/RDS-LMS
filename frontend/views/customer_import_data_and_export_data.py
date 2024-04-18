@@ -1,10 +1,12 @@
 from django.contrib import messages
 from django.shortcuts import redirect
-from frontend.models import OrgType, Location, City, LeadTable, ProductTable, customertable
+from frontend.models import OrgType, Location, City, LeadTable, ProductTable, customertable, UserActivity
 import pandas as pd
 from django.utils import timezone
 from django.http import HttpResponse
 from openpyxl import Workbook
+from django.utils import timezone
+from django.contrib.contenttypes.models import ContentType
 
 def customer_import_view(request):
     if request.method == 'POST':
@@ -83,7 +85,16 @@ def customer_import_view(request):
                             updated_by=request.user,
                         )
                         new_customer.products.set(selected_products)
-                        print("Success")
+                        
+                        # Create a new lead history entry
+                        UserActivity.objects.create(
+                        user=request.user,
+                        timestamp=timezone.now(),
+                        lable = f"{new_customer.org_name}",
+                        action="Upload customers sheet",
+                        content_type=ContentType.objects.get_for_model(customertable),
+                        object_id=new_customer.pk,
+                    )
 
                     except Exception as e:
                         messages.error(request, f"Error creating customer on row {index + 2}: {str(e)}")

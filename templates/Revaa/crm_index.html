@@ -146,20 +146,21 @@ Dashboard | Revaa Degital Solition
             <div class="col-12">
                 <div class="d-flex mt-2" style="align-items: start;">
                     <i class="after-icon fas fa-edit bg-gray text-xs me-3 fs-6 p-3" style="border-radius: 50%; border: 1px solid gray;"></i>
-                    <div class="timeline-item bg-dark w-100 p-3 text-light" style="border-radius: 0 10px 10px 10px;">
-                        <p class="time text-secondary" style="font-size: small;"><i class="fas fa-clock"></i> {{Recent_action.timestamp}}</p>
-                        <h5 class="timeline-header no-border">
-                            <a href="">
+                    <div class="timeline-item bg-dark w-100 p-3 text-light" style="border-radius: 0 10px 10px 10px; height: 100px;">
+                        <p class="time text-secondary p-0 m-0" style="font-size: small;">
+                        <i class="fas fa-clock"></i> 
+                        {{Recent_action.timestamp}}</p>
+                        <hr class="m-0 my-1">
+                        <p class="timeline-header no-border m-0 text-primary">
                                 {% if Recent_action.lable %}
                                     {{Recent_action.lable}}
                                 {% else %}
                                     {{Recent_action.user.username}}
                                 {% endif %}
-                            </a>
-                        </h5>
+                        </p>
                         <div class="timeline-body">
                             <ul style="list-style: none; padding: 0;">
-                                <li>{{Recent_action.action}}</li>
+                                <li style="font-size: small;">{{Recent_action.action}}</li>
                             </ul>
                         </div>
                     </div>

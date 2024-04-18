@@ -4,6 +4,9 @@ from frontend.models import *
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.contrib import messages
+from django.utils import timezone
+from django.contrib.contenttypes.models import ContentType
+
 
 # Create your views here.
 
@@ -78,6 +81,15 @@ def view_sing_customer(request, pk):
         get_data.products.set(selected_products)
 
         get_data.save()
+        # Create a new lead history entry
+        UserActivity.objects.create(
+        user=request.user,
+        timestamp=timezone.now(),
+        lable = f"{get_data.org_name}",
+        action="Update customers",
+        content_type=ContentType.objects.get_for_model(customertable),
+        object_id=get_data.pk,
+    )
 
         return redirect(reverse('editcustomer', kwargs={'pk': int(get_data.pk)}))
 
