@@ -27,7 +27,7 @@
   
                   <div class="form-outline mb-4" data-mdb-input-init>
                     <input type="text" id="emailinput" class="form-control form-control-lg" name="emailinput" />
-                    <label class="form-label" for="emailinput">EmployeeId (or) Email</label>
+                    <label class="form-label" for="emailinput">Employee ID (or) Email</label>
                   </div>
   
                   <!-- Password input -->
@@ -38,12 +38,25 @@
   
                   <!-- Checkbox -->
                   <div class="form-check d-flex  mb-4 ">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-                    <label class="form-check-label" for="form2Example33">
+                    <input class="form-check-input me-2" type="checkbox" value="" id="showpassword" />
+                    <label class="form-check-label" for="showpassword">
                       Show Password
                     </label>
+                    <script>
+                     const showpassword = document.getElementById('showpassword');
+                      const passwordinput = document.getElementById('passwordinput');
+
+                      showpassword.addEventListener('change', function() {
+                        if (this.checked) {
+                          passwordinput.setAttribute('type', 'text');
+                        } else {
+                          passwordinput.setAttribute('type', 'password');
+                        }
+                      });
+
+                    </script>
                   </div>
-                  <a href="{% url 'password_reset' %}">Froget Password</a>
+                  <a href="{% url 'password_reset' %}">Forget Password</a>
                   <!-- Submit button -->
                   <button type="submit" class="btn btn-primary btn-block mt-4">
                     Log In
