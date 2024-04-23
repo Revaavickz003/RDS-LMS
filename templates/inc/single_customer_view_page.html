@@ -39,7 +39,7 @@
 <section id="" class="container py-3 d-flex align-items-center  justify-content-between">
     <div class="contact d-flex align-items-center" style="gap: 2rem;">
         {% if get_data.mail_id %}
-        <a href="">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ get_data.mail_id }}" target="_blank">
             {% endif %}
             <div class="Mail d-flex align-items-center justify-content-center flex-column text-start">
                 <i class='bx bx-envelope 
@@ -67,38 +67,10 @@
                 text-muted fs-4 p-2' style="border-radius: 50%;" ></i>
                 <p class="m-0 p-0" style="font-size: small;">Schedule</p>
             </div>
-        </a>
-        {% if get_data.mail_id %}
-        <a href="#" onclick="openChat('{{get_data.email_id}}')">
-            {% endif %}
-        <div class="Chat d-flex align-items-center justify-content-center flex-column text-start">
-            <i class='bx bx-message-square-dots 
             {% if get_data.mail_id %}
-                bg-info 
-                {% else %}
-                bg-light
-                {% endif %}
-            text-muted fs-4 p-2' style="border-radius: 50%;" ></i>
-            <p class="m-0 p-0" style="font-size: small;">Chat</p>
-        </div>
         </a>
-        <script>
-            function openChat(email) {
-                // You would need to handle this based on your application's requirements
-                // This is just a placeholder to demonstrate the concept
-                window.open('https://chat.google.com/u/0/chat/person/' + email, '_blank');
-            }
-            </script>
-        <div class="Video d-flex align-items-center justify-content-center flex-column text-start">
-            <i class='bx bx-video 
-            {% if get_data.mail_id %}
-                bg-info 
-                {% else %}
-                bg-light
-                {% endif %}
-            text-muted fs-4 p-2' style="border-radius: 50%;"></i>
-            <p class="m-0 p-0" style="font-size: small;">Call</p>
-        </div>
+        {% endif %}
+        
     </div>
     <hr class="w-100 ml-3">
 </section>

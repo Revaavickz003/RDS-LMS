@@ -23,12 +23,14 @@ Dashboard | Revaa Degital Solition
                 </a>
             </div>
             <div class="col-sm-4">
-                <div class="card bg-light border-secondary mb-3">
-                    <div class="card-header">Without customer</div>
-                    <div class="card-body d-flex" style="display: flex; align-items: start; justify-content: space-between;">
-                        <h1 class="fs-1">{{with_out_customer}}</h1>
+                <a href="{% url 'without_view' %}">
+                    <div class="card bg-light border-secondary mb-3">
+                        <div class="card-header">Without customer</div>
+                        <div class="card-body d-flex" style="display: flex; align-items: start; justify-content: space-between;">
+                            <h1 class="fs-1">{{with_out_customer}}</h1>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-sm-4">
                 <a href="{% url 'coustomer' %}">
@@ -140,12 +142,21 @@ Dashboard | Revaa Degital Solition
         </script>
     </div>
     <div class="col-4">
-        <h5 class="mb-4">Recent actions</h5>
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h5 class="m-0 p-0">Recent actions</h5>
+            <!-- <button type="button" class="btn btn-link btn-sm btn-rounded bg-light" data-toggle="modal" data-target="#importdata">
+                Add
+                actions </button> -->
+        </div>
+        
         <div class="row">
+            {% if Recent_actions %}
             {% for Recent_action in Recent_actions %}
             <div class="col-12">
                 <div class="d-flex mt-2" style="align-items: start;">
-                    <i class="after-icon fas fa-edit bg-gray text-xs me-3 fs-6 p-3" style="border-radius: 50%; border: 1px solid gray;"></i>
+                    <div class="d-flex align-items-center justify-content-center me-3" style="padding: 0.2rem; border-radius: 50px; border: 1px solid gray; border-radius: 50%;">
+                        <i class="bx bx-signal-3 bg-gray text-xs fs-2" ></i>
+                    </div>
                     <div class="timeline-item bg-dark w-100 p-3 text-light" style="border-radius: 0 10px 10px 10px; height: 100px;">
                         <p class="time text-secondary p-0 m-0" style="font-size: small;">
                         <i class="fas fa-clock"></i> 
@@ -167,6 +178,12 @@ Dashboard | Revaa Degital Solition
                 </div>
             </div>
             {% endfor %}
+            {% else %}
+            <div class="col-12">
+                <img src="{% static 'images/No_data_for_recent_actions.jpg' %}" width="100%" alt="">
+                <p style="text-align: center;">No actions</p>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

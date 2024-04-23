@@ -45,6 +45,7 @@ urlpatterns = [
     
     #  Leads
     path('crm/leads/', leads_list_page.crm_page_view, name="leads"),
+    path('crm/without_view/', leads_list_page.without_view, name="without_view"),
     path('crm/leads/<int:pk>/edit/',view_single_lead.view_sing_lead, name='editlead'),
     path('crm/leads/filter/', leads_filter_view.ledas_filter, name="ledas_filter"),
     path('crm/leads/import/', lead_import_data_export_data.LeadImportView, name='lead_import'),
