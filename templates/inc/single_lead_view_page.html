@@ -38,24 +38,38 @@
 </div>
 <section id="" class="container py-3 d-flex align-items-center  justify-content-between">
     <div class="contact d-flex align-items-center" style="gap: 2rem;">
-        <a href="mailto:vignesh@revaadigital.com">
+        {% if get_data.mail_id %}
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ get_data.mail_id }}" target="_blank">
+            {% endif %}
             <div class="Mail d-flex align-items-center justify-content-center flex-column text-start">
-                <i class='bx bx-envelope bg-light text-muted fs-4 p-2' style="border-radius: 50%;"></i>
+                <i class='bx bx-envelope 
+                {% if get_data.mail_id %}
+                bg-info 
+                {% else %}
+                bg-light
+                {% endif %}
+                text-muted fs-4 p-2' style="border-radius: 50%;"></i>
                 <p class="m-0 p-0" style="font-size: small;">Mail</p>
             </div>
+            {% if get_data.mail_id %}
         </a>
-        <div class="Schedule d-flex align-items-center justify-content-center flex-column text-start">
-            <i class='bx bx-calendar-plus bg-light text-muted fs-4 p-2' style="border-radius: 50%;" ></i>
-            <p class="m-0 p-0" style="font-size: small;"> Schedule</p>
-        </div>
-        <div class="Chat d-flex align-items-center justify-content-center flex-column text-start">
-            <i class='bx bx-message-square-dots bg-light text-muted fs-4 p-2' style="border-radius: 50%;" ></i>
-            <p class="m-0 p-0" style="font-size: small;">Chat</p>
-        </div>
-        <div class="Video d-flex align-items-center justify-content-center flex-column text-start">
-            <i class='bx bx-video bg-light text-muted fs-4 p-2' style="border-radius: 50%;"></i>
-            <p class="m-0 p-0" style="font-size: small;">Call</p>
-        </div>
+        {% endif %}
+        {% if get_data.mail_id %}
+        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Event%20Title&dates=20240101T010000Z/20240101T020000Z&details=Event%20Description&location=Event%20Location&add={{get_data.mail_id}}" target="_blank">
+            {% endif %}
+              <div class="Schedule d-flex align-items-center justify-content-center flex-column text-start">
+                <i class='bx bx-calendar-plus 
+                {% if get_data.mail_id %}
+                bg-info 
+                {% else %}
+                bg-light
+                {% endif %}
+                text-muted fs-4 p-2' style="border-radius: 50%;" ></i>
+                <p class="m-0 p-0" style="font-size: small;">Schedule</p>
+            </div>
+            {% if get_data.mail_id %}
+        </a>
+        {% endif %}
     </div>
     <hr class="w-100 ml-3">
 </section>

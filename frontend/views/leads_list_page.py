@@ -95,3 +95,24 @@ def crm_page_view(request):
     }
 
     return render(request, 'Revaa/crm_leads_page.html', context)
+
+
+@login_required(login_url='/login')
+def without_view(request):
+    context = {
+        "leads": "activete",
+        'All_Leads': Lead.objects.filter(is_customer=False),
+        "Teams": Team.objects.all(),
+        "Org_Type": OrgType.objects.all(),
+        "Locations": Location.objects.all(),
+        "citys": City.objects.all(),
+        "lead_names": LeadTable.objects.all(),
+        "BUSINESS_TYPE_CHOICES": Lead.BUSINESS_TYPE_CHOICES,
+        "Products": ProductTable.objects.all(),
+        "Prioritys": Lead.PRIORITY_CHOICES,
+        "Statuss": Lead.STATUS_CHOICES,
+        'Org_Name': OrgName.objects.all(),
+        "users": CustomUser.objects.exclude(is_admin=True, is_active=True),
+    }
+
+    return render(request, 'Revaa/crm_leads_page.html', context)
