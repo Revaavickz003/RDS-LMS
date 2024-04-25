@@ -1,36 +1,14 @@
-<style>
-    .after-icon::after {
-        content: "";
-        display: block;
-        transform: rotate(90deg);
-        width: 1.6rem;
-        height: 2px;
-        background-color: blue;
-        margin-top: 5px;
-        position: absolute;
-        bottom: -12px;
-        left: -5px;
-    }
-</style>
+{% load static %}
 <div class="d-flex align-items-end">
-    {% if get_data.org_img %}
-        <div class="img-div-container-org-image d-flex align-items-center justify-content-center"
-            style="
-            background-image: url('{{ get_data.org_img.url }}');
-            width: 8rem;
-            height: 8rem;
-            border-radius: 50%;
-            background-size: 12rem; 
-            background-repeat: no-repeat;
-            background-position: center;
-            "
-        >
+    <div style="position: relative;">
+        <div class="profile-pic">
+            {% if get_data.org_img %}
+            <img src="{{ get_data.org_img.url }}" width="150" />
+            {% else %}
+            <img src="{% static 'images/fav-icon.png' %}" width="150" />
+            {% endif %}
         </div>
-    {% else %}
-        <div class="img-div-container bg-light d-flex align-items-center justify-content-center" style="width: 8rem; height: 8rem; border-radius: 50%; ">
-            <h1 class="m-0 h1 fs-0" style="font-size: 5rem;">{{ get_data.org_name|title|first }}</h1>
-        </div>
-    {% endif %}
+    </div> 
     <div>
         <h1 class="mx-4">{{get_data.org_name}} {% if get_data.is_customer %} <span class="h5 text-success">Customer</span> {% endif %}</h1>
     </div>

@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Import 
-                    {% if All_Leads %}
+                    {% if leads %}
                     leads
                     {% else %}
                     customer
@@ -21,7 +21,7 @@
                         <section id="content" class="content">
                             <div class="row">
                                 <div class="col-12">
-                                    {% if All_Leads %}
+                                    {% if leads %}
                                     <form action="{% url 'lead_import' %}" method="post" enctype="multipart/form-data">
                                         {% else %}
                                         <form action="{% url 'customer_import' %}" method="post" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
                                                         <div class="card-header">
                                                             <div class="card-title">
                                                                 Import 
-                                                                {% if All_Leads %}
+                                                                {% if leads %}
                                                                 leads
                                                                 {% else %}
                                                                 customer

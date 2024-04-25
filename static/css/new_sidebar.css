@@ -6,10 +6,13 @@
     --first-color: #6b6b6b;
     --first-color-light: #AFA5D9;
     --white-color: #F7F6FB;
+    --bg-light2:#FFF;
     --body-font: 'Nunito', sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 100
 }
+
+.bg-light2{background-color: var(--white-color) !important;}
 
 *,
 ::before,
@@ -24,6 +27,7 @@ body {
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     transition: .5s;
+    background-color: var(--bg-light2) !important;
 }
 
 a {
@@ -70,10 +74,11 @@ a {
     left: -30%;
     width: var(--nav-width);
     height: 100%;
-    background-color: var(--first-color);
+    background-color: var(--white-color);
     padding: .5rem 1rem 0 0;
     transition: .5s;
     z-index: var(--z-fixed);
+    border: 1px solid rgb(230, 230, 230);
 }
 
 .l-navbar>.nav {
@@ -98,7 +103,7 @@ a {
 
 .nav_logo-icon {
     font-size: 1.25rem;
-    color: var(--white-color)
+    color: black
 }
 
 .nav_logo-name {
@@ -109,12 +114,18 @@ a {
 .nav_link {
     position: relative;
     color: var(--first-color-light);
-    margin-bottom: 1.5rem;
-    transition: .3s
+    /* margin-bottom: 0.5rem; */
+    border-radius: 0 40px 40px 0;
+    border: 1px solid var(--white-color);
+    color: rgb(63, 63, 63);
+    transition: .5s
 }
 
 .nav_link:hover {
-    color: var(--white-color)
+    color: #386BC0;
+    border: 1px solid #386BC0;
+    background-color: var(--white-color);
+    border-radius: 0 40px 40px 0;
 }
 
 .nav_icon {
@@ -130,8 +141,9 @@ a {
 }
 
 .activete {
-    color: var(--white-color);
-
+    color: #FFF;
+    background-color: #386BC0;
+    border-radius: 0 40px 40px 0;
 }
 
 

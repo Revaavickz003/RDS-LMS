@@ -41,7 +41,7 @@ urlpatterns = [
     path('calendar_view/', calender_view.calendar_view, name='calendar_view'),
     path('setting/', settings_view.setting, name='setting'),
     path('teamview/<str:teamname>/', teamviewpage.teamview, name="teamview"),
-    path('profile/', profile_view.profile, name="profile_view"),
+    path('settings/', profile_view.profile, name="profile_view"),
     
     #  Leads
     path('crm/leads/', leads_list_page.crm_page_view, name="leads"),

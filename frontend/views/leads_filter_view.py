@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 def ledas_filter(request):
     if request.method == 'POST':
         # Retrieve form data
-        company_name = request.POST.get('companyname')  # Change to get, assuming it's a single value
+        company_name = request.POST.getlist('companyname')  # Change to get, assuming it's a single value
         company_type = request.POST.getlist('companytype')
         location = request.POST.getlist('Location')
         city = request.POST.getlist('City')
@@ -16,7 +16,6 @@ def ledas_filter(request):
         priority = request.POST.getlist('Priority')
         status = request.POST.getlist('Status')
         created_by = request.POST.getlist('Createdby')
-        updated_by = request.POST.getlist('Updatedby')
         from_amount = request.POST.get('fromAmount')
         to_amount = request.POST.get('toamount')
         
@@ -44,8 +43,6 @@ def ledas_filter(request):
             leads = leads.filter(status__in=status)
         if created_by:
             leads = leads.filter(created_by__in=created_by)
-        if updated_by:
-            leads = leads.filter(updated_by__in=updated_by)
         if from_amount:
             leads = leads.filter(amount__gte=from_amount)
         if to_amount:
@@ -63,7 +60,7 @@ def ledas_filter(request):
             "Products": ProductTable.objects.all(),
             "Prioritys": Lead.PRIORITY_CHOICES,
             "Statuss": Lead.STATUS_CHOICES,
-            "users": CustomUser.objects.exclude(is_admin=True, is_active=True),
+            "users": CustomUser.objects.filter(is_admin=True, is_active=True, is_staff=False),
             
         }
         return render(request, 'Revaa/crm_leads_page.html', context)

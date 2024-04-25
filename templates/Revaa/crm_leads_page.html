@@ -64,6 +64,12 @@ Leads Page | Revaa Digital Solution
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+<div class="row">
+    <div class="col-12">
+        <img src="{% static 'images/No_data_for_recent_actions.jpg' %}" width="30%" alt="">
+    </div>
+</div>
 {% endif %}
 </section>
 {% endblock %}

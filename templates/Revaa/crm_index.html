@@ -9,24 +9,25 @@ Dashboard | Revaa Degital Solition
 {% include 'inc/messages.html' %}
 
 <div class="row">
-    <h3 class="container">Dasboard</h3>
     <div class="col-8">
-        <div class="row mt-3">
+        <div class="row">
+            <h3 class="container">Dashboard</h3>
             <div class="col-sm-4">
                 <a href="{% url 'leads' %}">
-                    <div class="card bg-light mb-3">
-                    <div class="card-header">Over all leads</div>
-                    <div class="card-body">
-                        <h1 class="fs-1">{{over_all_leads}}</h1>
+                    <div class="box bg-light2 mb-3">
+                        <div class="card-header">Over all leads</div>
+                        <div class="card-body">
+                            <h1 class="fs-1">{{over_all_leads}}</h1>
+                        </div>
                     </div>
-                </div>
                 </a>
             </div>
             <div class="col-sm-4">
                 <a href="{% url 'without_view' %}">
-                    <div class="card bg-light border-secondary mb-3">
+                    <div class="box bg-light2 border-secondary mb-3">
                         <div class="card-header">Without customer</div>
-                        <div class="card-body d-flex" style="display: flex; align-items: start; justify-content: space-between;">
+                        <div class="card-body d-flex"
+                            style="display: flex; align-items: start; justify-content: space-between;">
                             <h1 class="fs-1">{{with_out_customer}}</h1>
                         </div>
                     </div>
@@ -34,7 +35,7 @@ Dashboard | Revaa Degital Solition
             </div>
             <div class="col-sm-4">
                 <a href="{% url 'coustomer' %}">
-                    <div class="card bg-light border-secondary mb-3">
+                    <div class="box bg-light2 border-secondary mb-3">
                         <div class="card-header">Over all customers</div>
                         <div class="card-body">
                             <h1 class="fs-1">{{over_all_customer}}</h1>
@@ -142,8 +143,15 @@ Dashboard | Revaa Degital Solition
         </script>
     </div>
     <div class="col-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h5 class="m-0 p-0">Recent actions</h5>
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <ul class="nav nav-tabs mb-3" id="myTab0" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <p class="nav-link p-3 px-4 active"> Recent action
+                        </p>
+                    </li>
+                </ul>
+            </div>
             <!-- <button type="button" class="btn btn-link btn-sm btn-rounded bg-light" data-toggle="modal" data-target="#importdata">
                 Add
                 actions </button> -->
@@ -154,10 +162,10 @@ Dashboard | Revaa Degital Solition
             {% for Recent_action in Recent_actions %}
             <div class="col-12">
                 <div class="d-flex mt-2" style="align-items: start;">
-                    <div class="d-flex align-items-center justify-content-center me-3" style="padding: 0.2rem; border-radius: 50px; border: 1px solid gray; border-radius: 50%;">
+                    <!-- <div class="d-flex align-items-center justify-content-center me-3" style="padding: 0.2rem; border-radius: 50px; border: 1px solid gray; border-radius: 50%;">
                         <i class="bx bx-signal-3 bg-gray text-xs fs-2" ></i>
-                    </div>
-                    <div class="timeline-item bg-dark w-100 p-3 text-light" style="border-radius: 0 10px 10px 10px; height: 100px;">
+                    </div> -->
+                    <div class="timeline-item bg-light2 w-100 p-3 text-light" style="border-radius: 0 10px 10px 10px; height: 100px;">
                         <p class="time text-secondary p-0 m-0" style="font-size: small;">
                         <i class="fas fa-clock"></i> 
                         {{Recent_action.timestamp}}</p>
@@ -171,7 +179,7 @@ Dashboard | Revaa Degital Solition
                         </p>
                         <div class="timeline-body">
                             <ul style="list-style: none; padding: 0;">
-                                <li style="font-size: small;">{{Recent_action.action}}</li>
+                                <li style="font-size: small;" class="text-dark">{{Recent_action.action}}</li>
                             </ul>
                         </div>
                     </div>

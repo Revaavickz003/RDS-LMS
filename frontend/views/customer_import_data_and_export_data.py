@@ -14,7 +14,7 @@ def customer_import_view(request):
         if import_file:
             if not import_file.name.endswith('.xlsx'):
                 messages.error(request, "Only Excel files (.xlsx) are supported.")
-                return redirect('leads')  # Redirect to appropriate URL
+                return redirect('coustomer')  # Redirect to appropriate URL
 
             try:
                 df = pd.read_excel(import_file)
@@ -100,23 +100,23 @@ def customer_import_view(request):
                         messages.error(request, f"Error creating customer on row {index + 2}: {str(e)}")
                         continue
 
-                return redirect('leads')  # Redirect to appropriate URL
+                return redirect('coustomer')  # Redirect to appropriate URL
 
             except Exception as e:
                 messages.error(request, f"Error reading Excel file: {str(e)}")
-                return redirect('leads')  # Redirect to appropriate URL
+                return redirect('coustomer')  # Redirect to appropriate URL
 
         else:
             messages.error(request, "No file uploaded.")
-            return redirect('leads')  # Redirect to appropriate URL
+            return redirect('coustomer')  # Redirect to appropriate URL
 
-    return redirect('leads')  # Redirect to appropriate URL
+    return redirect('coustomer')  # Redirect to appropriate URL
 
 
 # Export data
 
 def export_customer_data(request):
-    # Query all leads
+    # Query all coustomer
     Customers = customertable.objects.all()
 
     # Create a new workbook and select the active worksheet
