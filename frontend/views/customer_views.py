@@ -20,7 +20,7 @@ def convert_customer(request, id):
     # Check if a customer with the same organization name already exists
     existing_customer = customertable.objects.filter(org_name=get_data.org_name).first()
     if existing_customer:
-        messages.error(request, "Customer already exists with this organization name")
+        messages.success(request, "The lead already exists for Customer")
         return redirect(reverse('leads'))
     
 

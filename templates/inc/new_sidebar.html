@@ -19,8 +19,7 @@
     <nav class="nav">
         <div> 
             <a href="{% url 'crmdashboard' %}" class="nav_logo"> 
-                <img src="{% static 'images/Revaa-new-logo-white.png' %}" alt="" width="90">
-                 <!-- <span class="nav_logo-name">Revaa</span>  -->
+                <img src="{% static 'images/Revaa-new-logo-01.png' %}" alt="" width="90">
             </a>
             <div class="nav_list"> 
                 <a href="{% url 'crmdashboard' %}" class="nav_link {{leaddashbord}}"> 
@@ -32,14 +31,21 @@
                     <span class="nav_name">Leads</span> 
                 </a>
                 <a href="{% url 'coustomer' %}" class="nav_link {{customer}}"> 
-                    <i class='bx bx-user nav_icon'></i> 
+                    <i class='bx bx-group  nav_icon'></i>
                     <span class="nav_name">Customers</span> 
                 </a>
             </div>
-        </div> 
-        <a href="{% url 'logout_page' %}" class="nav_link"> 
-            <i class='bx bx-log-out nav_icon'></i> 
-            <span class="nav_name">SignOut</span> 
-        </a>
+        </div>
+        <div>
+            <a href="{% url 'profile_view' %}" class="nav_link {{settings}}"> 
+                <i class='bx bx-cog nav_icon'></i>
+                <span class="nav_name">Settings</span> 
+            </a>
+            <a href="{% url 'logout_page' %}" class="nav_link"> 
+                <i class='bx bx-log-out nav_icon'></i> 
+                <span class="nav_name">SignOut</span> 
+            </a>
+        </div>
+        
     </nav>
 </div>

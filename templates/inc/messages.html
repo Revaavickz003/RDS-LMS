@@ -1,14 +1,6 @@
 {% if messages %}
   {% for message in messages %}
-    <div class="alert
-      {% if 'error' in message.tags %}
-        alert-danger
-      {% elif 'info' in message.tags %}
-        alert-info
-      {% else %}
-        alert-primary
-      {% endif %}
-      alert-dismissible fade show w-100" role="alert">
+    <div class="alert alert-primary alert-dismissible fade show w-100" role="alert">
       <button type="button" class="btn-close" aria-label="Close"></button>
       {{ message }}
     </div>

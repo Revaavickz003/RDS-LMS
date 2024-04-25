@@ -9,7 +9,7 @@
                 <label class="label" for="file">
                     <span><i class='bx bx-pencil fs-5'></i></span>
                 </label>
-                <input id="file" type="file" name="company_logo" hidden onchange="loadFile(event)"/>
+                <input id="file" type="file" name="company_logo" accept="image/*" hidden onchange="loadFile(event)"/>
                 {% if get_data.org_img %}
                 <img src="{{ get_data.org_img.url }}" id="output" width="150" />
                 {% else %}

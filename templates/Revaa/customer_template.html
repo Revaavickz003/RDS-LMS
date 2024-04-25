@@ -48,7 +48,7 @@ Customer Page | Revaa Digital Solution
       <tr>
         <td class="p-2">{{forloop.counter}}</td>
         <td class="p-2"><a href="{% url 'editcustomer' pk=lead.pk %}">{{lead.org_name}}</a></td>
-        <td class="p-2">{{lead.client_name}}</td>
+        <td class="p-2">{{lead.customer_id}} | {{lead.client_name}}</td>
         <td class="p-2">{{lead.client_number}}</td>
         <td class="p-2">{{lead.follow_up}}</td>
         <td class="p-2">{{lead.created_date}}</td>
@@ -63,6 +63,12 @@ Customer Page | Revaa Digital Solution
       {% endfor %}
     </tbody>
   </table>
+  {% else %}
+    <div class="row">
+        <div class="col-12">
+            <img src="{% static 'images/No_data_for_recent_actions.jpg' %}" width="30%" alt="">
+        </div>
+    </div>
   {% endif %}
 </section>
 {% endblock %}
