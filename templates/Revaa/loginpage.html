@@ -12,19 +12,19 @@
   <section class="bg-dark h-100">
     <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%); height: 100vh;">
       <div class="container h-100 d-flex align-item-center justify-content-center">
-        <div class="row  align-items-center">
-          <div class="col-lg-6 m-0 mb-lg-0">
+        <div class="row  align-items-center justify-content-between">
+            {% include 'inc/messages.html' %}
+          <div class="col-lg-7 m-0 mb-lg-0">
             <h1 class="my-5 display-3 fw-bold ls-tight">
-              The best offer <br />
-              <span class="text-primary">for your business</span>
+              Efficiency Redefined,
+              <span class="text-primary">Productivity Amplified.</span>
             </h1>
           </div>
-          <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="col-lg-5 mb-5 mb-lg-0">
             <div class="card">
               <div class="card-body py-5 px-md-5">
                 <form method="post" action="{% url 'login' %}">
                   {% csrf_token %}
-  
                   <div class="form-outline mb-4" data-mdb-input-init>
                     <input type="text" id="emailinput" class="form-control form-control-lg" name="emailinput" />
                     <label class="form-label" for="emailinput">Employee ID (or) Email</label>

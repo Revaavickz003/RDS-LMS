@@ -27,13 +27,10 @@ from frontend.views import (
     view_single_customer,
     customer_import_data_and_export_data,
     customer_filter,
+    basic_functions,
     )
 
 urlpatterns = [
-    #  Login and Logout Views
-    path('login/',login_page_view.login_page, name='login'),
-    path('logout/', login_page_view.logout_page, name='logout_page'),
-    path('activate/<uidb64>/<token>/', employees_views.activate_account, name='activate'),
 
     # sidebar Views
     path('', crm_dashboard.maindashbord_page_view, name="crmdashboard"),
@@ -89,6 +86,12 @@ urlpatterns = [
     path('password_reset/done/',auth_views.PasswordResetDoneView.as_view(),name='password_reset_done'),
     path('reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(),name='password_reset_confirm'),
     path('reset/done/',auth_views.PasswordResetCompleteView.as_view(),name='password_reset_complete'),
+
+    # Bacic functions
+    path('login/',login_page_view.login_page, name='login'),
+    path('logout/', login_page_view.logout_page, name='logout_page'),
+    path('activate/<uidb64>/<token>/', employees_views.activate_account, name='activate'),
+    path('darkmood', basic_functions.darkmood, name='darkmood'),
 
 ]
 if settings.DEBUG:
