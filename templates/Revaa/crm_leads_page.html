@@ -11,8 +11,7 @@ Leads Page | Revaa Digital Solution
     <h4>Leads Page</h4>
 <div class="d-flex align-items-center justify-content-between my-4">
     {% if All_Leads %}
-    {% include 'alertform/lead_filter_form.html' %}
-        {% endif %}
+        
         <form action="{% url 'ledas_filter' %}" method="post">
             {% csrf_token %}
             <div class="w-50 d-flex align-items-center">
@@ -68,7 +67,7 @@ Leads Page | Revaa Digital Solution
                 setDateRange();
             });
         </script>
-        
+    {% endif %}
     <div>
         {% include 'alertform/new_Leads.html' %}
         <button type="button" class="btn btn-link btn-sm btn-rounded bg-light" data-toggle="modal"

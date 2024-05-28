@@ -246,6 +246,7 @@ class Lead(models.Model):
     business_type = models.CharField(choices=BUSINESS_TYPE_CHOICES, max_length=20)
     products = models.ManyToManyField(ProductTable)
     amount = models.FloatField()
+    finallybudjet = models.FloatField()
     end_of_date = models.DateField()
     priority = models.CharField(choices=PRIORITY_CHOICES, max_length=10)
     mail_id = models.EmailField(max_length=50, null=True, blank=True)

@@ -1,0 +1,22 @@
+<div class="modal fade" id="newcountry" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'new_country' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-outline" data-mdb-input-init>
+                        <input type="text" id="Country_name" name="Country_name" class="form-control" />
+                        <label class="form-label" for="form12">Country Name</label>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="Create">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
