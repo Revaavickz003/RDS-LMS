@@ -110,7 +110,7 @@ def customer_page_view(request):
         "Prioritys": Lead.PRIORITY_CHOICES,
         "Statuss": Lead.STATUS_CHOICES,
         'Org_Name': OrgName.objects.all(),
-        "users": CustomUser.objects.filter(is_admin=True, is_active=True, is_staff=False),
+        "users": CustomUser.objects.filter(is_admin=True, is_active=True),
     }
 
     return render(request, 'Revaa/customer_template.html', context)

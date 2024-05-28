@@ -9,26 +9,83 @@ Leads Page | Revaa Digital Solution
 {% include 'inc/messages.html' %}
 <section class="content">
     <h4>Leads Page</h4>
-  <div class="d-flex align-items-center justify-content-between my-4">
+<div class="d-flex align-items-center justify-content-between my-4">
     {% if All_Leads %}
     {% include 'alertform/lead_filter_form.html' %}
-    <button type="button" class="btn btn-primary" data-toggle="modal"
-            data-target="#lead_filter_form"> filter the lead table </button>
-            {% endif %}
+        {% endif %}
+        <form action="{% url 'ledas_filter' %}" method="post">
+            {% csrf_token %}
+            <div class="w-50 d-flex align-items-center">
+                <div class="form-outline me-2" data-mdb-input-init>
+                    <input type="date" id="Fromdate" name="Fromdate" class="form-control" />
+                    <label class="form-label" for="Fromdate">From Date</label>
+                </div>
+                <div class="form-outline" data-mdb-input-init>
+                    <input type="date" id="todate" name="todate" class="form-control" />
+                    <label class="form-label" for="todate">To Date</label>
+                </div>
+                <input type="submit" value="Filter" class="btn btn-primary mx-2">
+            </div>
+            <p class="p-0 m-0 mt-2 small text-primary">Filter only any 30 days</p>
+        </form>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                const fromDateInput = document.getElementById('Fromdate');
+                const toDateInput = document.getElementById('todate');
+        
+                const setDateRange = () => {
+                    if (fromDateInput.value) {
+                        let fromDate = new Date(fromDateInput.value);
+                        let toDate = new Date(fromDate);
+                        toDate.setDate(fromDate.getDate() + 30);
+                        toDateInput.value = toDate.toISOString().split('T')[0];
+                    }
+        
+                    if (toDateInput.value) {
+                        let toDate = new Date(toDateInput.value);
+                        let fromDate = new Date(toDate);
+                        fromDate.setDate(toDate.getDate() - 30);
+                        fromDateInput.value = fromDate.toISOString().split('T')[0];
+                    }
+                };
+        
+                fromDateInput.addEventListener('change', () => {
+                    let fromDate = new Date(fromDateInput.value);
+                    let toDate = new Date(fromDate);
+                    toDate.setDate(fromDate.getDate() + 30);
+                    toDateInput.value = toDate.toISOString().split('T')[0];
+                });
+        
+                toDateInput.addEventListener('change', () => {
+                    let toDate = new Date(toDateInput.value);
+                    let fromDate = new Date(toDate);
+                    fromDate.setDate(toDate.getDate() - 30);
+                    fromDateInput.value = fromDate.toISOString().split('T')[0];
+                });
+        
+                // Initial setup to keep dates in sync if both fields are filled on page load
+                setDateRange();
+            });
+        </script>
+        
     <div>
         {% include 'alertform/new_Leads.html' %}
         <button type="button" class="btn btn-link btn-sm btn-rounded bg-light" data-toggle="modal"
             data-target="#new_Leads_add_container"> New Leads </button>
 
         {% include 'alertform/import_data.html' %}
-        <button type="button" class="btn btn-link btn-sm btn-rounded bg-light" data-toggle="modal" data-target="#importdata">
+        <button type="button" class="btn btn-link btn-sm btn-rounded bg-light" data-toggle="modal"
+            data-target="#importdata">
             Import
             data </button>
-            {% if All_Leads %}
-        <a type="button" class="btn btn-link btn-sm btn-rounded bg-light" href="{% url 'export_leads' %}">Export data</a>
+        {% if All_Leads %}
+        <a type="button" class="btn btn-link btn-sm btn-rounded bg-light" href="{% url 'export_leads' %}">Export
+            data</a>
         {% endif %}
     </div>
 </div>
+
 <hr>
 {% if All_Leads %}
 <table id="example" class="table table-striped" style="width:100%">
