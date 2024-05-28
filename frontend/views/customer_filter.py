@@ -58,7 +58,7 @@ def customers_filter(request):
             "Products": ProductTable.objects.all(),
             "Prioritys": Lead.PRIORITY_CHOICES,
             "Statuss": Lead.STATUS_CHOICES,
-            "users": CustomUser.objects.filter(is_admin=True, is_active=True, is_staff=False),
+            "users": CustomUser.objects.filter(is_admin=True, is_active=True),
         }
         return render(request, 'Revaa/customer_template.html', context)
     else:
