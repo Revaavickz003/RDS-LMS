@@ -237,31 +237,31 @@ class Lead(models.Model):
 
     client_name = models.CharField(max_length=20)
     client_number = models.IntegerField()
-    org_name = models.CharField(max_length=30)
-    org_img = models.ImageField(upload_to='lead_and_customer_companylogo', null=True, blank=True)  # Corrected the upload_to argument
-    org_type = models.ForeignKey(OrgType, on_delete=models.CASCADE)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    company_name = models.CharField(max_length=30)
+    company_img = models.ImageField(upload_to='lead_and_customer_companylogo', null=True, blank=True)  # Corrected the upload_to argument
+    company_type = models.ForeignKey(OrgType, on_delete=models.CASCADE)
+    country = models.ForeignKey(Location, on_delete=models.CASCADE)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
-    lead_name = models.ForeignKey(LeadTable, on_delete=models.CASCADE)
+    reffral_name = models.ForeignKey(LeadTable, on_delete=models.CASCADE)
     business_type = models.CharField(choices=BUSINESS_TYPE_CHOICES, max_length=20)
     products = models.ManyToManyField(ProductTable)
-    amount = models.FloatField()
-    finallybudjet = models.FloatField()
+    proposal_amount = models.FloatField()
+    finally_budjet = models.FloatField()
     end_of_date = models.DateField()
     priority = models.CharField(choices=PRIORITY_CHOICES, max_length=10)
     mail_id = models.EmailField(max_length=50, null=True, blank=True)
     status = models.CharField(choices=STATUS_CHOICES, max_length=15)
-    comment = models.TextField(max_length=100)
-    remarks = models.TextField(max_length=100)
-    follow_up = models.DateField()
+    additional_remarks = models.TextField(max_length=100)
+    call_back_comments = models.TextField(max_length=100)
+    call_back = models.DateField()
     is_customer = models.BooleanField(default=False)
     created_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='leads_created', null=True)
-    created_date = models.DateField(auto_now_add=True)
+    created_date = models.DateField()
     updated_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='leads_updated_by', null=True)
-    updated_date = models.DateField(auto_now=True)
+    updated_date = models.DateField()
 
     def __str__(self):
-        return self.org_name
+        return self.company_name
 
 
 def generate_customer_id():
@@ -403,7 +403,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 
 class UserActivity(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='activities')
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(datetime.datetime.now())
     lable = models.CharField(max_length=100)
     action = models.CharField(max_length=100)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)

@@ -34,6 +34,19 @@ def new_countrys(request):
         else:
             new_country = Location.objects.create(location=Country_name)
             new_country.save()
+
+            # Get the ContentType instance for the Location model
+            location_content_type = ContentType.objects.get_for_model(Location)
+            
+            new_activity = UserActivity.objects.create(
+                user=request.user,
+                timestamp=datetime.datetime.now(),
+                lable=f"Create {Country_name} from country list",
+                action="Created",
+                content_type=location_content_type,
+                object_id=new_country.pk,
+            )
+            new_activity.save()
             messages.success(request, 'Country Added Successfully')
         return redirect('setting')
     else:
@@ -48,6 +61,17 @@ def new_city(request):
         else:
             city_name = City.objects.create(city=city_name)
             city_name.save()
+
+            location_content_type = ContentType.objects.get_for_model(City)
+            new_activity = UserActivity.objects.create(
+                user=request.user,
+                timestamp=datetime.datetime.now(),
+                lable=f"Create {city_name} from city list",
+                action="Created",
+                content_type=location_content_type,
+                object_id=city_name.pk,
+            )
+            new_activity.save()
             messages.success(request, 'City Added Successfully')
         return redirect('setting')
     else:
@@ -62,6 +86,16 @@ def new_referrals(request):
         else:
             Referral_name = LeadTable.objects.create(Lead_Name=Referral_name)
             Referral_name.save()
+            location_content_type = ContentType.objects.get_for_model(LeadTable)
+            new_activity = UserActivity.objects.create(
+                user=request.user,
+                timestamp=datetime.datetime.now(),
+                lable=f"Create {Referral_name} from referral list",
+                action="Created",
+                content_type=location_content_type,
+                object_id=Referral_name.pk,
+            )
+            new_activity.save()
             messages.success(request, 'New Referral Added Successfully')
         return redirect('setting')
     else:
@@ -76,7 +110,17 @@ def new_business_type(request):
         else:
             bussiness_type = OrgType.objects.create(org_type=bussiness_type)
             bussiness_type.save()
-            messages.success(request, 'New Bussiness Type Added Successfully')
+            location_content_type = ContentType.objects.get_for_model(OrgType)
+            new_activity = UserActivity.objects.create(
+                user=request.user,
+                timestamp=datetime.datetime.now(),
+                lable=f"Create {bussiness_type} from company type list",
+                action="Created",
+                content_type=location_content_type,
+                object_id=bussiness_type.pk,
+            )
+            new_activity.save()
+            messages.success(request, 'New company type Type Added Successfully')
         return redirect('setting')
     else:
         return redirect('setting')
