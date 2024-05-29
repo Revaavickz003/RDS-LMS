@@ -153,20 +153,13 @@ Dashboard | Revaa Degital Solition
                     </li>
                 </ul>
             </div>
-            <!-- <button type="button" class="btn btn-link btn-sm btn-rounded bg-light" data-toggle="modal" data-target="#importdata">
-                Add
-                actions </button> -->
         </div>
-        
         <div class="row">
             {% if Recent_actions %}
             {% for Recent_action in Recent_actions %}
             <div class="col-12">
                 <div class="d-flex mt-2" style="align-items: start;">
-                    <!-- <div class="d-flex align-items-center justify-content-center me-3" style="padding: 0.2rem; border-radius: 50px; border: 1px solid gray; border-radius: 50%;">
-                        <i class="bx bx-signal-3 bg-gray text-xs fs-2" ></i>
-                    </div> -->
-                    <div class="timeline-item bg-light2 w-100 p-3 text-light" style="border-radius: 0 10px 10px 10px; height: 100px;">
+                    <div class="timeline-item bg-light2 w-100 p-3 pb-0 text-light" style="border-radius: 0 10px 10px 10px; min-height: 80px;">
                         <p class="time text-secondary p-0 m-0" style="font-size: small;">
                         <i class="fas fa-clock"></i> 
                         {{Recent_action.timestamp}}</p>
@@ -179,8 +172,17 @@ Dashboard | Revaa Degital Solition
                                 {% endif %}
                         </p>
                         <div class="timeline-body">
-                            <ul style="list-style: none; padding: 0;">
-                                <li style="font-size: small;" class="text-dark">{{Recent_action.action}}</li>
+                            <ul style="list-style: none;" class="p-0">
+                                <li style="font-size: small;" class=" d-flex align-items- 
+                                text-{% if Recent_action.action == 'Created' %}success{% elif Recent_action.action == 'Deleted' %}danger{% else %}warning{% endif %}">
+                                {% if Recent_action.action == 'Created' %}
+                                <i class='bx bxs-badge-check fs-6 me-1' ></i>
+                                {% elif Recent_action.action == 'Deleted' %}
+                                <i class='bx bx-window-close fs-6 me-1'></i>
+                                {% else %}
+                                <i class='bx bxs-check-circle fs-6 me-1'></i>
+                                {% endif %}
+                                {{Recent_action.action}}</li>
                             </ul>
                         </div>
                     </div>

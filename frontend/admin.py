@@ -35,7 +35,7 @@ class CustomuserAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 
 @admin.register(Lead)
 class LeadAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ['org_name', 'client_name']
+    list_display = ['company_name', 'client_name']
 
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
