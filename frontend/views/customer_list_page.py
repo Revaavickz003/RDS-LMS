@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from frontend.models import CustomUser, Lead, OrgType, Location, City, LeadTable, ProductTable, Team, customertable, OrgName, UserActivity
+from frontend.models import CustomUser, Lead, OrgType, Location, City, LeadTable, ProductTable, customertable, OrgName, UserActivity
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
@@ -100,7 +100,6 @@ def customer_page_view(request):
     context = {
         "customer": "activete",
         'All_Customers': customertable.objects.all(),
-        "Teams": Team.objects.all(),
         "Org_Type": OrgType.objects.all(),
         "Locations": Location.objects.all(),
         "citys": City.objects.all(),
