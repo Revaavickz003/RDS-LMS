@@ -2,14 +2,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from frontend.models import (
     CustomUser,
-    Department,
-    Position,
-    TasksheetTable,
-    Client,
     Lead,
-    Team,
-    Role,
-    EmployeeStatus,
     OrgType, 
     Location, 
     City,
@@ -36,31 +29,3 @@ class CustomuserAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 @admin.register(Lead)
 class LeadAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ['company_name', 'client_name']
-
-@admin.register(Position)
-class PositionAdmin(admin.ModelAdmin):
-    list_display = ['Position_Name',]
-
-@admin.register(Role)
-class RoleAdmin(admin.ModelAdmin):
-    list_display = ['role_name',]
-
-@admin.register(Department)
-class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ['department_name',]
-
-@admin.register(TasksheetTable)
-class TasksheetTableAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ['assigned_by','assigned_to']
-
-@admin.register(Team)
-class TeamAdmin(admin.ModelAdmin):
-    list_display = ['team_name',]
-
-@admin.register(EmployeeStatus)
-class EmployeeStatusAdmin(admin.ModelAdmin):
-    list_display = ['employee_id','status','created_date']
-
-@admin.register(Client)
-class ClientAdmin(admin.ModelAdmin):
-    list_display = ['client_id',]

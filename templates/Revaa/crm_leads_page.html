@@ -104,10 +104,10 @@ Leads Page | Revaa Digital Solution
         {% for lead in All_Leads reversed%}
         <tr>
             <td class="p-2">{{forloop.counter}}</td>
-            <td class="p-2"><a href="{% url 'editlead' pk=lead.pk %}">{{lead.org_name}}</a></td>
+            <td class="p-2"><a href="{% url 'editlead' pk=lead.pk %}">{{lead.company_name}}</a></td>
             <td class="p-2">{{lead.client_name}}</td>
             <td class="p-2">{{lead.client_number}}</td>
-            <td class="p-2">{{lead.follow_up}}</td>
+            <td class="p-2">{{lead.call_back}}</td>
             <td class="p-2">{{lead.created_date}}</td>
             <td class="p-2">
                 {% for product in lead.products.all %}

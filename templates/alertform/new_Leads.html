@@ -43,7 +43,7 @@
                                 <select id="Company_type" name="Company_type" class="form-control">
                                     <option value="">Select Company Type</option>
                                     {% for Org_Type in Org_Type %}
-                                    <option value="{{Org_Type.org_type}}">{{Org_Type}}</option>
+                                    <option value="{{Org_Type.pk}}">{{Org_Type}}</option>
                                     {% endfor %}
                                 </select>
                                 <p class="p-0 m-0 text-danger small"></p>
