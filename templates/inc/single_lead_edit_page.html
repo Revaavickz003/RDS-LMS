@@ -11,8 +11,8 @@
                     </label>
                     <input id="file" type="file" name="company_logo" accept="image/*" hidden
                         onchange="loadFile(event)" />
-                    {% if get_data.org_img %}
-                    <img src="{{ get_data.org_img.url }}" id="output" width="150" />
+                    {% if get_data.company_img %}
+                    <img src="{{ get_data.company_img.url }}" id="output" width="150" />
                     {% else %}
                     <img src="{% static 'images/fav-icon.png' %}" id="output" width="150" />
                     {% endif %}

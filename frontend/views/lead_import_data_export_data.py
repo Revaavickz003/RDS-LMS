@@ -1,10 +1,8 @@
 from django.contrib import messages
 from django.shortcuts import redirect
-from frontend.models import Lead, OrgName, OrgType, Location, City, LeadTable, ProductTable, UserActivity
+from frontend.models import Lead, OrgType, Location, City, LeadTable, ProductTable, UserActivity, OrgName
 import pandas as pd
 from datetime import datetime
-from django.http import HttpResponse
-from openpyxl import Workbook
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 
@@ -16,8 +14,8 @@ def LeadImportView(request):
                 df = pd.read_excel(import_file)
 
                 for index, row in df.iterrows():
-                    org_name = row.get('Company Name')
-                    
+                    company_name = row.get('Company Name')
+
                     # Handle Business Type
                     business_type = row.get('Business type')
                     if not business_type:
@@ -26,86 +24,102 @@ def LeadImportView(request):
                     elif business_type not in dict(Lead.BUSINESS_TYPE_CHOICES).keys():
                         messages.error(request, f"Error on row {index + 2}: Invalid Business Type '{business_type}'.")
                         continue
-                        
                     try:
-                        org_type = OrgType.objects.get_or_create(org_type=row.get('Company Type'))[0]
-                        location = Location.objects.get_or_create(location=row.get('Location'))[0]
-                        city = City.objects.get_or_create(city=row.get('City'))[0]
-                        lead_name = LeadTable.objects.get_or_create(Lead_Name=row.get('Lead'))[0]
+                        # Fetch existing entries
+                        org_type = OrgType.objects.filter(org_type=row.get('Company Type')).first()
+                        country = Location.objects.filter(location=row.get('Location')).first()
+                        city = City.objects.filter(city=row.get('City')).first()
+                        reffral_name = LeadTable.objects.filter(Lead_Name=row.get('Referral Name')).first()
+
+                        # If any required foreign key is missing, log an error and skip the row
+                        if not org_type:
+                            messages.error(request, f"Error on row {index + 2}: Company Type '{row.get('Company Type')}' does not exist.")
+                            continue
+                        if not country:
+                            messages.error(request, f"Error on row {index + 2}: Location '{row.get('Location')}' does not exist.")
+                            continue
+                        if not city:
+                            messages.error(request, f"Error on row {index + 2}: City '{row.get('City')}' does not exist.")
+                            continue
+                        if not reffral_name:
+                            messages.error(request, f"Error on row {index + 2}: Referral Name '{row.get('Referral Name')}' does not exist.")
+                            continue
 
                         # Handle products
                         product_names = [p.strip() for p in str(row.get('Products')).split(',')]
                         if not product_names:
-                            messages.warning(request, f"No products specified for company '{org_name}'.")
+                            messages.warning(request, f"No products specified for company '{company_name}'.")
                             continue
                         try:
                             selected_products = []
                             for product_name in product_names:
-                                product = ProductTable.objects.get(Product_Name=product_name)
+                                product = ProductTable.objects.filter(Product_Name=product_name).first()
+                                if not product:
+                                    raise ValueError(f"Product '{product_name}' does not exist.")
                                 selected_products.append(product)
-                        except:
-                            messages.warning(request, f"Invalid products for company '{org_name}'.")
+                        except ValueError as e:
+                            messages.warning(request, f"Invalid products for company '{company_name}': {e}")
                             continue
 
                         # Handle end_of_date
                         end_of_date = row.get('End of Date', '')
                         if not end_of_date:
                             end_of_date = datetime.now().date()
-                        
+                        else:
+                            end_of_date = datetime.strptime(end_of_date, '%Y-%m-%d').date()
 
-                        # Handle follow_up
-                        follow_up_date_str = row.get('Follow up', '')
-                        if not follow_up_date_str:
-                            follow_up_date_str = datetime.now().date()
+                        # Handle call_back
+                        call_back_date_str = row.get('Call Back', '')
+                        if not call_back_date_str:
+                            call_back_date_str = datetime.now().date()
+                        else:
+                            call_back_date_str = datetime.strptime(call_back_date_str, '%Y-%m-%d').date()
 
                         # Handle Company Name
-                        if not org_name:
+                        if not company_name:
                             messages.error(request, f"Error on row {index + 2}: Company Name is missing.")
                             continue
 
-                        existing_org = OrgName.objects.filter(Org_Name=org_name).first()
+                        existing_org = OrgName.objects.filter(Org_Name=company_name).first()
                         if existing_org:
-                            messages.error(request, f"Error on row {index + 2}: Company '{org_name}' already exists.")
-                            continue
-
-                        try:
-                            new_company = OrgName.objects.create(Org_Name=org_name)
-                        except Exception as e:
-                            messages.error(request, f"Error creating company '{org_name}': {str(e)}")
+                            messages.error(request, f"Error on row {index + 2}: Company '{company_name}' already exists.")
                             continue
 
                         new_lead = Lead.objects.create(
                             client_name=row.get('Client Name', ''),
                             client_number=row.get('Client Number', ''),
-                            org_type=org_type,
-                            location=location,
+                            company_name=company_name,
+                            company_type=org_type,
+                            country=country,
                             city=city,
-                            lead_name=lead_name,
+                            reffral_name=reffral_name,
                             business_type=business_type,
-                            amount=int(row.get('Amount', '')),
+                            proposal_amount=row.get('Proposal Amount', 0),
+                            finally_budjet=row.get('Finally Budget', 0),
                             end_of_date=end_of_date,
                             priority=row.get('Priority', ''),
                             mail_id=row.get('Email', ''),
                             status=row.get('Status', ''),
-                            comment=row.get('Comments', ''),
-                            remarks=row.get('Remark', ''),
-                            follow_up=follow_up_date_str,
+                            additional_remarks=row.get('Additional Remarks', ''),
+                            call_back_comments=row.get('Call Back Comments', ''),
+                            call_back=call_back_date_str,
                             created_by=request.user,
                             updated_by=request.user,
-                            org_name=new_company,
+                            created_date=datetime.now().date(),
+                            updated_date=datetime.now().date(),
                         )
                         new_lead.products.set(selected_products)
-                        
+
                         # Create a new lead history entry
                         UserActivity.objects.create(
-                        user=request.user,
-                        timestamp=timezone.now(),
-                        lable = f"{new_lead.org_name}",
-                        action="created lead",
-                        content_type=ContentType.objects.get_for_model(Lead),
-                        object_id=new_lead.pk,
-                    )
-                        
+                            user=request.user,
+                            timestamp=timezone.now(),
+                            label=f"{new_lead.company_name}",
+                            action="created lead",
+                            content_type=ContentType.objects.get_for_model(Lead),
+                            object_id=new_lead.pk,
+                        )
+
                     except Exception as e:
                         messages.error(request, f"Error creating lead on row {index + 2}: {str(e)}")
                         continue
@@ -116,7 +130,12 @@ def LeadImportView(request):
     return redirect('leads')
 
 
+
 # Export data
+
+from django.http import HttpResponse
+from openpyxl import Workbook
+from frontend.models import Lead
 
 def export_leads_to_excel(request):
     # Query all leads
@@ -132,52 +151,51 @@ def export_leads_to_excel(request):
         'Client Number', 
         'Company Name', 
         'Company Type',
-        'Location', 
+        'Country', 
         'City', 
         'Business Type',
         'Products',
-        'Amount',
-        'Is Customer',
-        'Created Date',
+        'Proposal Amount',
+        'Finally Budget',
         'End of Date',
-        'Lead Name', 
         'Priority',
         'Mail ID', 
         'Status', 
-        'Comment', 
-        'Remarks', 
-        'Follow Up', 
+        'Additional Remarks', 
+        'Call Back Comments', 
+        'Call Back', 
+        'Is Customer',
+        'Created Date',
         'Created By', 
         'Updated By', 
         'Updated Date'
     ]
     ws.append(headers)
-
     # Append lead data to worksheet
     for lead in leads:
         product_names = ", ".join([product.Product_Name for product in lead.products.all()])
         lead_data = [
             lead.client_name, 
             lead.client_number, 
-            lead.org_name, 
-            lead.org_type.org_type,
-            lead.location.location, 
+            lead.company_name, 
+            lead.company_type.org_type,
+            lead.country.location, 
             lead.city.city, 
             lead.business_type,
             product_names,  # Modify this line to include product names as a comma-separated string
-            lead.amount,
-            lead.is_customer,
-            lead.created_date,
+            lead.proposal_amount,
+            lead.finally_budjet,
             lead.end_of_date,
-            lead.lead_name.Lead_Name,
             lead.priority, 
             lead.mail_id, 
             lead.status,
-            lead.comment, 
-            lead.remarks, 
-            lead.follow_up, 
-            lead.created_by.username, 
-            lead.updated_by.username, 
+            lead.additional_remarks, 
+            lead.call_back_comments, 
+            lead.call_back, 
+            lead.is_customer,
+            lead.created_date,
+            lead.created_by.username if lead.created_by else '', 
+            lead.updated_by.username if lead.updated_by else '', 
             lead.updated_date
         ]
         ws.append(lead_data)
