@@ -24,6 +24,7 @@ def LeadImportView(request):
                     elif business_type not in dict(Lead.BUSINESS_TYPE_CHOICES).keys():
                         messages.error(request, f"Error on row {index + 2}: Invalid Business Type '{business_type}'.")
                         continue
+
                     try:
                         # Fetch existing entries
                         org_type = OrgType.objects.filter(org_type=row.get('Company Type')).first()
@@ -80,9 +81,14 @@ def LeadImportView(request):
                             messages.error(request, f"Error on row {index + 2}: Company Name is missing.")
                             continue
 
-                        existing_org = OrgName.objects.filter(Org_Name=company_name).first()
-                        if existing_org:
-                            messages.error(request, f"Error on row {index + 2}: Company '{company_name}' already exists.")
+                        # Check for duplicate leads with the same company_name and products
+                        existing_leads = Lead.objects.filter(
+                            company_name=company_name,
+                            products__in=selected_products
+                        ).distinct()
+
+                        if existing_leads.exists():
+                            messages.error(request, f"Error on row {index + 2}: Lead for company '{company_name}' with the same products already exists.")
                             continue
 
                         new_lead = Lead.objects.create(
@@ -110,12 +116,11 @@ def LeadImportView(request):
                         )
                         new_lead.products.set(selected_products)
 
-                        # Create a new lead history entry
                         UserActivity.objects.create(
                             user=request.user,
                             timestamp=timezone.now(),
-                            label=f"{new_lead.company_name}",
-                            action="created lead",
+                            lable = f"Created {new_lead.company_name} for leads list",
+                            action="Created",
                             content_type=ContentType.objects.get_for_model(Lead),
                             object_id=new_lead.pk,
                         )

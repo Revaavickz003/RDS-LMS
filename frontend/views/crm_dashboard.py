@@ -20,7 +20,6 @@ def maindashbord_page_view(request):
     # Combine product counts from both sources
     lead_product_counts = lead_product_counts
     customer_product_counts = customer_product_counts
-
     context = {
         'leaddashbord':'activete',
         'lead_products': lead_product_names,
