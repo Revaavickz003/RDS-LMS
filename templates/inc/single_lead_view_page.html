@@ -2,8 +2,8 @@
 <div class="d-flex align-items-end">
     <div style="position: relative;">
         <div class="profile-pic">
-            {% if get_data.org_img %}
-            <img src="{{ get_data.org_img.url }}" width="150" />
+            {% if get_data.company_img %}
+            <img src="{{ get_data.company_img.url }}" width="150" />
             {% else %}
             <img src="{% static 'images/fav-icon.png' %}" width="150" />
             {% endif %}

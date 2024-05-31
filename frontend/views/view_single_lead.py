@@ -18,57 +18,71 @@ def view_sing_lead(request, pk):
     formatted_follow_up = get_data.call_back.strftime('%d-%m-%Y')
 
     if request.method == 'POST':
-        client_name = request.POST.get('Client_name', '')
-        client_number = request.POST.get('Client_number', '')
-        company_name = request.POST.get('Company_name', '')
+        client_name = request.POST.get('client_name', '')
+        client_number = request.POST.get('client_number', '')
         company_type = request.POST.get('Company_type', '')
         country = request.POST.get('Country', '')
         city = request.POST.get('city', '')
         reffral_name = request.POST.get('lead_name', '')
         business_type = request.POST.get('bussinesstype', '')
-        proposal_amount = request.POST.get('Amount', '')
-        finally_budjet = request.POST.get('Amount', '')
-        end_of_date = request.POST.get('enddate', '')
+        proposal_amount = request.POST.get('proposal_amount', '')
+        finally_budjet = request.POST.get('finally_budjet', '')
         priority = request.POST.get('Prioritys', '')
         mail_id = request.POST.get('email', '')
         status = request.POST.get('satus', '')
         additional_remarks = request.POST.get('comments', '')
-        call_back_comments = request.POST.get('Remarks', '')
-        call_back = request.POST.get('callbackdate', '')
+        call_back_comments = request.POST.get('remarks', '')
+
+        try:
+            company_type = OrgType.objects.get(pk = company_type)
+        except:
+            messages.error(request, "Please select Company type")
+        try:
+            country = Location.objects.get(location = country)
+        except:
+            messages.error(request, "Please select Country")
+        try:
+            city = City.objects.get(city = city)
+        except:
+            messages.error(request, "Please select City")
+        try:
+            Lead_name = LeadTable.objects.get(Lead_Name = reffral_name)
+        except:
+            messages.error(request, "Please select Reffral name")
 
         try:
             selected_product_names = request.POST.getlist('products')
         except:
             return render(request, 'Revaa/crm_template.html', {'error': 'Invalid lead'})
-        
-        # Formated dates
         # End Date
-        enddate = request.POST.get('enddate')
-        enddate = datetime.strptime(enddate, "%d-%m-%Y")
+        end_of_date = request.POST.get('enddate', '')
+        enddate = datetime.strptime(end_of_date, "%d-%m-%Y")
         enddate = enddate.strftime("%Y-%m-%d")
-
         # Follow up date
-        callbackdate = request.POST.get('callbackdate')
-        callbackdate = datetime.strptime(callbackdate, "%d-%m-%Y")
+        call_back = request.POST.get('callbackdate', '')
+        callbackdate = datetime.strptime(call_back, "%d-%m-%Y")
         callbackdate = callbackdate.strftime("%Y-%m-%d")
+        org_img = request.FILES.get('company_logo', '')
+        print(org_img)
 
-        org_img = request.FILES.get('company_logo')
         if org_img:
             get_data.company_img = org_img
-        get_data.client_name = request.POST.get('client_name')
-        get_data.client_number = request.POST.get('client_number')
-        get_data.company_type = Create_Company_type
-        get_data.country = Locations
-        get_data.city = city_name
-        get_data.reffral_name = lead_name
-        get_data.business_type = request.POST.get('bussinesstype')
-        get_data.proposal_amount = request.POST.get('amount')
+            print("Save")
+        get_data.client_name = client_name
+        get_data.client_number = client_number
+        get_data.company_type = company_type
+        get_data.country = country
+        get_data.city = city
+        get_data.reffral_name = Lead_name
+        get_data.business_type = business_type
+        get_data.proposal_amount = proposal_amount
+        get_data.finally_budjet = finally_budjet
         get_data.end_of_date = enddate
-        get_data.priority = request.POST.get('Prioritys')
-        get_data.mail_id = request.POST.get('email')
-        get_data.status = request.POST.get('satus')
-        get_data.call_back_comments = request.POST.get('comments')
-        get_data.additional_remarks = request.POST.get('remarks')
+        get_data.priority = priority
+        get_data.mail_id = mail_id
+        get_data.status = status
+        get_data.call_back_comments = additional_remarks
+        get_data.additional_remarks = call_back_comments
         get_data.call_back = callbackdate
 
         selected_products = ProductTable.objects.filter(Product_Name__in=selected_product_names)
@@ -80,8 +94,8 @@ def view_sing_lead(request, pk):
         UserActivity.objects.create(
         user=request.user,
         timestamp=timezone.now(),
-        lable = f"{get_data.org_name}",
-        action="Updated lead",
+        lable = f"Update Lead, {get_data.client_name}, {get_data.company_name} company",
+        action="Updated",
         content_type=ContentType.objects.get_for_model(Lead),
         object_id=get_data.pk,
     )
