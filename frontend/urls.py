@@ -3,13 +3,13 @@ from django.conf.urls.static import static
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 from frontend.views import (
+    convert_customer,
     crm_dashboard,
     lead_import_data_export_data,
     leads_list_page,
     settings_view,
     login_page_view,
     view_single_lead,
-    customer_views,
     customer_list_page,
     leads_filter_view,
     view_single_customer,
@@ -31,12 +31,12 @@ urlpatterns = [
     path('crm/leads/filter/', leads_filter_view.ledas_filter, name="ledas_filter"),
     path('crm/leads/import/', lead_import_data_export_data.LeadImportView, name='lead_import'),
     path('crm/leads/export/', lead_import_data_export_data.export_leads_to_excel, name='export_leads'),
-    path('crm/lead/comvert/coustomer/<int:id>/', customer_views.convert_customer, name='convertocustomer'),
+    path('crm/lead/comvert/coustomer/<int:id>/', convert_customer.convert_customer, name='convertocustomer'),
 
     # customer
     path('crm/coustomer/', customer_list_page.customer_page_view, name="coustomer"),
     path('crm/coustomer/<int:pk>/edit/',view_single_customer.view_sing_customer, name='editcustomer'),
-    path('crm/coustomer/filter/', customer_filter.customers_filter, name="customers_filter"),
+    path('crm/coustomer/filter/', customer_filter.customer_filter, name="customers_filter"),
     path('crm/customer/import/', customer_import_data_and_export_data.customer_import_view, name='customer_import'),
     path('crm/customer/export/', customer_import_data_and_export_data.export_customer_data, name='export_customer'),
 
@@ -55,7 +55,7 @@ urlpatterns = [
     # Bacic functions
     path('login/',login_page_view.login_page, name='login'),
     path('logout/', login_page_view.logout_page, name='logout_page'),
-    path('darkmood', basic_functions.darkmood, name='darkmood'),
+    path('darkmood/', basic_functions.darkmood, name='darkmood'),
 
 ]
 if settings.DEBUG:
