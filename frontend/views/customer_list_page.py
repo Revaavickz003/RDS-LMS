@@ -4,99 +4,115 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
+import datetime
 
 @login_required(login_url='/login')
 def customer_page_view(request):
     if request.method == 'POST':
-        Create_Company_type = request.POST['Company_type']
-        Locations = request.POST['location']
-        city_name = request.POST['city']
-        lead_name = request.POST['lead_name']
+        client_photo = request.FILES.get('company_logo', '')
+        client_name = request.POST.get('Client_name', '')
+        client_number = request.POST.get('Client_number', '')
+        company_name = request.POST.get('Company_name', '')
+        company_type_id = request.POST.get('Company_type', '')
+        country_name = request.POST.get('Country', '')
+        city_name = request.POST.get('city', '')
+        referral_name = request.POST.get('lead_name', '')
+        business_type = request.POST.get('bussinesstype', '')
+        proposal_amount = request.POST.get('Amount', '')
+        end_of_date = request.POST.get('enddate', '')
+        priority = request.POST.get('Prioritys', '')
+        mail_id = request.POST.get('email', None)
+        status = request.POST.get('satus', '')
+        additional_remarks = request.POST.get('comments', '')
+        call_back_comments = request.POST.get('Remarks', '')
+        call_back = request.POST.get('callbackdate', '')
+        selected_product_names = request.POST.getlist('products')
+
+        # Validate required fields and add error messages
+        if not client_name:
+            messages.error(request, "Client name is required.")
+        if not client_number:
+            messages.error(request, "Client number is required.")
+        if not company_name:
+            messages.error(request, "Company name is required.")
+        if not company_type_id:
+            messages.error(request, "Company type is required.")
+        if not country_name:
+            messages.error(request, "Country is required.")
+        if not city_name:
+            messages.error(request, "City is required.")
+        if not referral_name:
+            messages.error(request, "Referral name is required.")
+        if not business_type:
+            messages.error(request, "Business type is required.")
+        if not proposal_amount:
+            messages.error(request, "Proposal amount is required.")
+        if not end_of_date:
+            messages.error(request, "End date is required.")
+        if not priority:
+            messages.error(request, "Priority is required.")
+        if not status:
+            messages.error(request, "Status is required.")
+        if not additional_remarks:
+            messages.error(request, "Additional remarks are required.")
+        if not call_back_comments:
+            messages.error(request, "Call back comments are required.")
+        if not call_back:
+            messages.error(request, "Call back date is required.")
+        if not selected_product_names:
+            messages.error(request, "Please select products.")
 
         try:
-            Create_Company_type = OrgType.objects.get(org_type=Create_Company_type)
-        except:
-            if Create_Company_type  != '':
-                Create_Company_type = OrgType.objects.create(org_type=Create_Company_type)
-            else:
-                messages.error(request, 'Please enter a Company type')
+            company_type = OrgType.objects.get(pk=company_type_id)
+            country = Location.objects.get(location=country_name)
+            city = City.objects.get(city=city_name)
+            referral = LeadTable.objects.get(Lead_Name=referral_name)
 
-        try:
-            Locations = Location.objects.get(location=Locations)
-        except:
-            if Locations  != '':
-                Locations = Location.objects.create(location=Locations)
-            else:
-                messages.error(request, 'Please enter a Location')
-
-        try:
-            city_name = City.objects.get(city=city_name)
-        except:
-            if city_name  != '':
-                city_name = City.objects.create(city=city_name)
-            else:
-                messages.error(request, 'Please enter a city name')
-        try:
-            lead_name = LeadTable.objects.get(Lead_Name=lead_name)
-        except:
-            if lead_name  != '':
-                lead_name = LeadTable.objects.create(Lead_Name=lead_name)
-            else:
-                messages.error(request, 'Please enter a lead name')
-
-        try:
-            selected_product_names = request.POST.getlist('products')
-        except:
-            return render(request, 'Revaa/crm_template.html', {'error': 'Invalid lead'})
-        
-        org_img = request.FILES.get('company_logo')
-        if org_img:
-            org_img = org_img
-        else:
-            org_img = None
-
-        try:
             new_lead = customertable.objects.create(
-                org_img = org_img,
-                client_name=request.POST['Client_name'],
-                client_number=request.POST['Client_number'],
-                org_name=request.POST['Company_name'],
-                org_type=Create_Company_type,
-                location=Locations,
-                city=city_name,
-                lead_name=lead_name,
-                business_type=request.POST['bussinesstype'],
-                amount=request.POST['Amount'],
-                end_of_date=request.POST['enddate'],
-                priority=request.POST['Prioritys'],
-                mail_id=request.POST['email'],
-                status=request.POST['satus'],
-                comment=request.POST['comments'],
-                remarks=request.POST['Remarks'],
-                follow_up=request.POST['callbackdate'],
-                created_by = request.user,
-                updated_by = request.user
+                client_name=client_name,
+                client_number=client_number,
+                org_name=company_name,
+                org_type=company_type,
+                location=country,
+                city=city,
+                lead_name=referral,
+                business_type=business_type,
+                amount=proposal_amount,
+                end_of_date=end_of_date,
+                priority=priority,
+                mail_id=mail_id,
+                status=status,
+                comment=additional_remarks,
+                remarks=call_back_comments,
+                follow_up=call_back,
+                created_by=request.user,
+                created_date=datetime.datetime.now(),
+                updated_by=request.user,
+                updated_date=datetime.datetime.now(),
             )
+
+            if client_photo:
+                new_lead.org_img = client_photo
 
             selected_products = ProductTable.objects.filter(Product_Name__in=selected_product_names)
             new_lead.products.set(selected_products)
 
             new_lead.save()
 
-            # After saving the new customer, log the activity
             UserActivity.objects.create(
                 user=request.user,
                 timestamp=timezone.now(),
-                lable = f"{new_lead.org_name}",
-                action="created customer",
-                content_type=ContentType.objects.get_for_model(customertable),
+                lable = f"Create customer, {new_lead.client_name}, {new_lead.org_name} company for customer list",
+                action="Created",
+                content_type=ContentType.objects.get_for_model(Lead),
                 object_id=new_lead.pk,
             )
             return redirect('coustomer')
-        
+
         except Exception as e:
-            messages.error(request, f"{e}")
+            messages.error(request, f"An error occurred: {e}")
             return redirect('coustomer')
+
     context = {
         "customer": "activete",
         'All_Customers': customertable.objects.all(),
