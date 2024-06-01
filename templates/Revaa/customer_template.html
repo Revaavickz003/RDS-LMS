@@ -12,7 +12,7 @@ Customer Page | Revaa Digital Solution
   <div class="d-flex align-items-center justify-content-between my-4 ">
     {% if All_Customers %}
         
-        <form action="{% url 'ledas_filter' %}" method="post">
+        <form action="{% url 'customers_filter' %}" method="post">
             {% csrf_token %}
             <div class="w-50 d-flex align-items-center">
                 <div class="form-outline me-2" data-mdb-input-init>
@@ -27,7 +27,6 @@ Customer Page | Revaa Digital Solution
             </div>
             <p class="p-0 m-0 mt-2 small text-primary">Filter only any 30 days</p>
         </form>
-        
         <script>
             document.addEventListener('DOMContentLoaded', (event) => {
                 const fromDateInput = document.getElementById('Fromdate');
