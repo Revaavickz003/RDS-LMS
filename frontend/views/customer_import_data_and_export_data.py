@@ -33,9 +33,9 @@ def customer_import_view(request):
 
                     try:
                         org_type, _ = OrgType.objects.get_or_create(org_type=row.get('Company Type'))
-                        location, _ = Location.objects.get_or_create(location=row.get('Location'))
+                        location, _ = Location.objects.get_or_create(location=row.get('Country'))
                         city, _ = City.objects.get_or_create(city=row.get('City'))
-                        lead_name, _ = LeadTable.objects.get_or_create(Lead_Name=row.get('Lead'))
+                        lead_name, _ = LeadTable.objects.get_or_create(Lead_Name=row.get('Refarrel Name'))
 
                         # Handle products
                         product_names = [p.strip() for p in str(row.get('Products')).split(',')]
@@ -73,13 +73,13 @@ def customer_import_view(request):
                             city=city,
                             lead_name=lead_name,
                             business_type=business_type,
-                            amount=int(row.get('Amount', '')),
+                            amount=int(row.get('Budget', '')),
                             end_of_date=end_of_date,
                             priority=row.get('Priority', ''),
                             mail_id=row.get('Email', ''),
                             status=row.get('Status', ''),
-                            comment=row.get('Comments', ''),
-                            remarks=row.get('Remark', ''),
+                            comment=row.get('Additional Remarks', ''),
+                            remarks=row.get('Call back comments', ''),
                             follow_up=follow_up_date_str,
                             created_by=request.user,
                             updated_by=request.user,

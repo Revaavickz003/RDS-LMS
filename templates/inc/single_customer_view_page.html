@@ -65,22 +65,26 @@
                         <h5 class="p-2 px-4 bg-white  rounded-6" style="width: fit-content;">{{product.Product_Name}}</h5>
                     {% endfor %}
                 </div>
-                <h1 class="m-0 mt-3 d-flex align-items-center">
-                    <i class='bx bx-rupee'></i> 
-                    <p class="m-0 h3" style="width: fit-content;">{{get_data.amount}}</p>
-                </h1>
                 <div>
                     <p class="mt-3 mb-2 p-0">End Date</p>
                     <p class="m-0 h5" style="width: fit-content;">{{get_data.end_of_date}}</p>
                 </div>
                 <div class="m-0 mt-3 d-flex align-items-center" style="gap: 10px;">
-                    <p class="m-0 alert-success px-4 py-1 rounded-6" style="width: fit-content;">{{get_data.priority}}</p>
-                    <p class="m-0 alert-info px-4 py-1  rounded-6" style="width: fit-content;">{{get_data.status}}</p>
+                    <p class="m-0 alert-success px-4 py-1 rounded-pill" style="width: fit-content;">{{get_data.priority}}</p>
+                    <p class="m-0 alert-info px-4 py-1  rounded-pill" style="width: fit-content;">{{get_data.status}}</p>
                 </div>
                 <div class="mt-3">
                     <p class="mt-3 mb-2 p-0">Call back Date</p>
                     <p class="m-0 h5" style="width: fit-content;">{{get_data.follow_up}}</p>
                 </div>
+                <div class="mt-3">
+                    <p class="m-0 p-0">Budget</p>
+                    <h1 class="m-0 mt-3 d-flex align-items-center">
+                        <i class='bx bx-rupee'></i> 
+                        <p class="m-0 h3" style="width: fit-content;">{{get_data.amount}}</p>
+                    </h1>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -92,7 +96,7 @@
             <div class="bg-light p-3 rounded-3">
                 <p class="fs-4 fw-bold mb-3">{{get_data.client_name |upper}} <span class="text-muted fw-normal" style="font-size: small;">[Client Name]</span></p>
                 <p>{{get_data.client_number}} <span class="text-muted fw-normal" style="font-size: small;">[Client Number]</span></p>
-                <p>{{get_data.org_type}} <span class="text-muted fw-normal" style="font-size: small;">[Company type]</span></p>
+                <p>{{get_data.org_type.org_type}} <span class="text-muted fw-normal" style="font-size: small;">[Company type]</span></p>
                 <p>{{get_data.location}} <span class="text-muted fw-normal" style="font-size: small;">[Company Location]</span></p>
                 <p>{{get_data.city}} <span class="text-muted fw-normal" style="font-size: small;">[City]</span></p>
                 <p>{{get_data.lead_name}} <span class="text-muted fw-normal" style="font-size: small;">[Lead]</span></p>

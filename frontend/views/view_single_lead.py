@@ -6,6 +6,7 @@ from datetime import datetime
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
+import datetime as dt
 
 @login_required(login_url='/login')
 def view_sing_lead(request, pk):
@@ -63,11 +64,9 @@ def view_sing_lead(request, pk):
         callbackdate = datetime.strptime(call_back, "%d-%m-%Y")
         callbackdate = callbackdate.strftime("%Y-%m-%d")
         org_img = request.FILES.get('company_logo', '')
-        print(org_img)
 
         if org_img:
             get_data.company_img = org_img
-            print("Save")
         get_data.client_name = client_name
         get_data.client_number = client_number
         get_data.company_type = company_type
@@ -85,6 +84,9 @@ def view_sing_lead(request, pk):
         get_data.additional_remarks = call_back_comments
         get_data.call_back = callbackdate
 
+        get_data.updated_by = request.user
+        get_data.updated_date = dt.datetime.now()
+
         selected_products = ProductTable.objects.filter(Product_Name__in=selected_product_names)
         get_data.products.set(selected_products)
 
@@ -92,13 +94,13 @@ def view_sing_lead(request, pk):
         
         # Create a new lead history entry
         UserActivity.objects.create(
-        user=request.user,
-        timestamp=timezone.now(),
-        lable = f"Update Lead, {get_data.client_name}, {get_data.company_name} company",
-        action="Updated",
-        content_type=ContentType.objects.get_for_model(Lead),
-        object_id=get_data.pk,
-    )
+            user=request.user,
+            timestamp=dt.datetime.now(),
+            lable = f"Update Lead, {get_data.client_name}, {get_data.company_name} company",
+            action="Updated",
+            content_type=ContentType.objects.get_for_model(Lead),
+            object_id=get_data.pk,
+        )
 
         return redirect(reverse('editlead', kwargs={'pk': get_data.pk}))
 

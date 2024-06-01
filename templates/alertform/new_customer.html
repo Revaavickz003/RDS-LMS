@@ -93,73 +93,57 @@
                         </div>
                         <div class="col-3">
                             <div class="mb-4">
-                                <div class="form-outline" data-mdb-input-init>
-                                    <input list="company_names" id="Company_type" name="Company_type"
-                                        class="form-control" />
-                                    <label class="form-label" for="Company_type">Select Company Type</label>
-                                    <datalist id="company_names">
-                                        {% for Org_Type in Org_Type %}
-                                        <option value="{{Org_Type.org_type}}">
-                                            {% endfor %}
-                                    </datalist>
-                                </div>
+                                <select id="Company_type" name="Company_type" class="form-control">
+                                    <option value="">Select Company Type</option>
+                                    {% for Org_Type in Org_Type %}
+                                    <option value="{{Org_Type.pk}}">{{Org_Type}}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-4">
-                                <div class="form-outline" data-mdb-input-init>
-                                    <input list="location_names" id="location" name="location" class="form-control" />
-                                    <label class="form-label" for="location">Select Location</label>
-                                    <datalist id="location_names">
-                                        <option value="">Select Location</option>
-                                        {% for Location in Locations %}
-                                        <option value="{{ Location.location }}">
-                                            {% endfor %}
-                                    </datalist>
-                                </div>
+                                <select id="Country" name="Country" class="form-control">
+                                    <option value="">Select Country</option>
+                                    {% for Location in Locations %}
+                                    <option value="{{ Location.location }}">{{Location}}</option>
+                                    {% endfor %}
+                                </select>
+                                <p class="p-0 m-0 text-danger small"></p>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-4">
-                                <div class="form-outline" data-mdb-input-init>
-                                    <input list="city_names" id="city" name="city" class="form-control" />
-                                    <label class="form-label" for="city">Select City</label>
-                                    <datalist id="city_names">
-                                        <option value="">Select City</option>
-                                        {% for city in citys %}
-                                        <option value="{{ city.city }}">
-                                            {% endfor %}
-                                    </datalist>
-                                </div>
+                                <select id="city" name="city" class="form-control">
+                                    <option value="">Select City</option>
+                                    {% for city in citys %}
+                                    <option value="{{ city.city }}">{{city}}</option>
+                                    {% endfor %}
+                                </select>
+                                <p class="p-0 m-0 text-danger small"></p>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-4">
-                                <div class="form-outline" data-mdb-input-init>
-                                    <input list="lead_names" id="Lead_Name" name="lead_name" class="form-control" />
-                                    <label class="form-label" for="Lead_Name">Lead Name</label>
-                                    <datalist id="lead_names">
-                                        <option value="">Lead Name</option>
-                                        {% for lead_name in lead_names %}
-                                        <option value="{{ lead_name.Lead_Name }}">
-                                            {% endfor %}
-                                    </datalist>
-                                </div>
+                                <select id="Lead_Name" name="lead_name" class="form-control">
+                                    <label class="form-label" for="Lead_Name">Referral Name</label>
+                                    <option value="">Referral Name</option>
+                                    {% for lead_name in lead_names %}
+                                    <option value="{{ lead_name.Lead_Name }}">{{lead_name.Lead_Name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <p class="p-0 m-0 text-danger small"></p>
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="mb-4">
-                                <div class="form-outline" data-mdb-input-init>
-                                    <input list="business_types" id="bussinesstype" name="bussinesstype"
-                                        class="form-control" />
-                                    <label class="form-label" for="bussinesstype">Business Type</label>
-                                    <datalist id="business_types">
-                                        <option value="">Business Type</option>
-                                        {% for value, label in BUSINESS_TYPE_CHOICES %}
-                                        <option value="{{ value }}">{{ label }}</option>
-                                        {% endfor %}
-                                    </datalist>
-                                </div>
+                                <select class="form-control" id="bussinesstype" name="bussinesstype">
+                                    <option value="">Business Type</option>
+                                    {% for value, label in BUSINESS_TYPE_CHOICES %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                                <p class="p-0 m-0 text-danger small"></p>
                             </div>
                         </div>
                         <div class="col-6 mb-4 d-flex align-items-center justify-content-between">
@@ -174,7 +158,7 @@
                             <div class="mb-4">
                                 <div class="form-outline" data-mdb-input-init>
                                     <input type="number" id="Amount" name="Amount" class="form-control" />
-                                    <label class="form-label" for="form12">Amount</label>
+                                    <label class="form-label" for="form12">Budget</label>
                                 </div>
                             </div>
                         </div>
@@ -188,17 +172,13 @@
                         </div>
                         <div class="col-3">
                             <div class="mb-4">
-                                <div class="form-outline" data-mdb-input-init>
-                                    <input list="priority_options" id="Prioritys" name="Prioritys"
-                                        class="form-control" />
-                                    <label class="form-label" for="Prioritys">Priority</label>
-                                    <datalist id="priority_options">
-                                        <option value="">Priority</option>
-                                        {% for value, label in Prioritys %}
-                                        <option value="{{ value }}">{{ label }}</option>
-                                        {% endfor %}
-                                    </datalist>
-                                </div>
+                                <select id="Prioritys" name="Prioritys" class="form-control">
+                                    <option value="">Priority</option>
+                                    {% for value, label in Prioritys %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                                <p class="p-0 m-0 text-danger small"></p>
                             </div>
                         </div>
                         <div class="col-3">
@@ -211,16 +191,13 @@
                         </div>
                         <div class="col-3">
                             <div class="mb-4">
-                                <div class="form-outline" data-mdb-input-init>
-                                    <input list="status_options" id="satus" name="satus" class="form-control" />
-                                    <label class="form-label" for="satus">Select Status</label>
-                                    <datalist id="status_options">
-                                        <option value="">Select Status</option>
-                                        {% for value, label in Statuss %}
-                                        <option value="{{ value }}">{{ label }}</option>
-                                        {% endfor %}
-                                    </datalist>
-                                </div>
+                                <select id="satus" name="satus" class="form-control">
+                                    <option value="">Select Status</option>
+                                    {% for value, label in Statuss %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                                <p class="p-0 m-0 text-danger small"></p>
                             </div>
                         </div>
                         <div class="col-3">
@@ -234,13 +211,13 @@
                         <div class="col-6">
                             <div class="form-outline" data-mdb-input-init>
                                 <textarea class="form-control" id="comments" name="comments" rows="4"></textarea>
-                                <label class="form-label" for="comments">Message</label>
+                                <label class="form-label" for="comments">Additional Remarks</label>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-outline" data-mdb-input-init>
                                 <textarea class="form-control" id="Remarks" name="Remarks" rows="4"></textarea>
-                                <label class="form-label" for="Remarks">Remark</label>
+                                <label class="form-label" for="Remarks">Call back Comments</label>
                             </div>
                         </div>
                     </div>

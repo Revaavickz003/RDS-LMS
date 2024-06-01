@@ -20,8 +20,8 @@
                 .profile-pic {
                     display: inline-block;
                     position: relative;
-                    width: 150px; /* Adjust as needed */
-                    height: 150px; /* Adjust as needed */
+                    width: 150px;
+                    height: 150px;
                     border-radius: 50%;
                     overflow: hidden;
                     box-shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
@@ -82,55 +82,41 @@
                         <label class="form-label" for="formControlLg">Email</label>
                     </div>
                     <div class="mb-4">
-                        <div class="form-outline" data-mdb-input-init>
-                            <input list="company_names" id="Company_type" name="Company_type" class="form-control" value="{{get_data.org_type}}"/>
-                            <label class="form-label" for="Company_type">Select Company Type</label>
-                            <datalist id="company_names">
-                                {% for Org_Type in Org_Type %}
-                                <option value="{{Org_Type.org_type}}">
-                                {% endfor %}
-                            </datalist>
-                        </div>
+                        <select id="Company_type" name="Company_type" class="form-control">
+                            <option value="">Select Company Type</option>
+                            {% for Org_Type in Org_Type %}
+                            <option value="{{Org_Type.pk}}" {% if get_data.org_type == Org_Type %} selected {% endif %}>{{Org_Type}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-4">
-                        <div class="form-outline" data-mdb-input-init>
-                            <input list="location_names" id="location" name="location" class="form-control"  value="{{get_data.location}}" />
-                            <label class="form-label" for="location">Select Location</label>
-                            <datalist id="location_names">
-                                <option value="">Select Location</option>
-                                {% for Location in Locations %}
-                                <option value="{{ Location.location }}">
-                                {% endfor %}
-                            </datalist>
-                        </div>
+                        <select id="Country" name="Country" class="form-control">
+                            <option value="">Select Country</option>
+                            {% for Location in Locations %}
+                            <option value="{{ Location.location }}"{% if get_data.location == Location %} selected {% endif %}>{{Location}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-4">
-                        <div class="form-outline" data-mdb-input-init>
-                            <input list="city_names" id="city" name="city" class="form-control" value="{{get_data.city}}" />
-                            <label class="form-label" for="city">Select City</label>
-                            <datalist id="city_names">
-                                <option value="">Select City</option>
-                                {% for city in citys %}
-                                <option value="{{ city.city }}">
-                                {% endfor %}
-                            </datalist>
-                        </div>
+                        <select id="city" name="city" class="form-control">
+                            <option value="">Select City</option>
+                            {% for city in citys %}
+                            <option value="{{ city.city }}" {% if get_data.city == city %} selected {% endif %}>{{city}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-4">
-                        <div class="form-outline" data-mdb-input-init>
-                            <input list="lead_names" id="Lead_Name" name="lead_name" class="form-control" value="{{get_data.lead_name}}"/>
-                            <label class="form-label" for="Lead_Name">Lead Name</label>
-                            <datalist id="lead_names">
-                                <option value="">Lead Name</option>
-                                {% for lead_name in lead_names %}
-                                <option value="{{ lead_name.Lead_Name }}">
-                                {% endfor %}
-                            </datalist>
-                        </div>
+                        <select id="Lead_Name" name="lead_name" class="form-control">
+                            <label class="form-label" for="Lead_Name">Referral Name</label>
+                            <option value="">Referral Name</option>
+                            {% for lead_name in lead_names %}
+                            <option value="{{ lead_name.Lead_Name }}" {% if get_data.lead_name == lead_name %} selected {% endif %}>{{lead_name.Lead_Name}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="form-outline" data-mdb-input-init>
                         <textarea class="form-control" id="comments" name="comments" rows="2">{{get_data.comment}}</textarea>
-                        <label class="form-label" for="comments">Message</label>
+                        <label class="form-label" for="comments">Additional Remarks</label>
                     </div>
                 </div>
             </div>
@@ -139,7 +125,7 @@
                 <div class="mt-4">
                     <div class="form-outline mb-4" data-mdb-input-init>
                         <input type="number" id="amount" name="amount" class="form-control form-control-lg" value="{{get_data.amount}}" />
-                        <label class="form-label" for="form12">Amount</label>
+                        <label class="form-label" for="form12">Budget</label>
                     </div>
                     <select class="form-multi-select w-100 mb-4" name="products" id="products" multiple data-coreui-search="true">
                         {% for Product in Products %}
@@ -151,48 +137,36 @@
                         <label class="form-label" for="form12">End Date</label>
                     </div>
                     <div class="mb-4">
-                        <div class="form-outline" data-mdb-input-init>
-                            <input list="priority_options" id="Prioritys" name="Prioritys" class="form-control" value="{{get_data.priority}}" />
-                            <label class="form-label" for="Prioritys">Priority</label>
-                            <datalist id="priority_options">
-                                <option value="">Priority</option>
-                                {% for value, label in Prioritys %}
-                                    <option value="{{ value }}">{{ label }}</option>
-                                {% endfor %}
-                            </datalist>
-                        </div>
+                        <select id="Prioritys" name="Prioritys" class="form-control">
+                            <option value="">Priority</option>
+                            {% for value, label in Prioritys %}
+                            <option value="{{ value }}" {% if get_data.priority == label %} selected {% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-4">
-                        <div class="form-outline" data-mdb-input-init>
-                            <input list="status_options" id="satus" name="satus" class="form-control" value="{{get_data.status}}" />
-                            <label class="form-label" for="satus">Select Status</label>
-                            <datalist id="status_options">
-                                <option value="">Select Status</option>
-                                {% for value, label in Statuss %}
-                                    <option value="{{ value }}">{{ label }}</option>
-                                {% endfor %}
-                            </datalist>
-                        </div>
+                        <select id="satus" name="satus" class="form-control">
+                            <option value="">Select Status</option>
+                            {% for value, label in Statuss %}
+                            <option value="{{ value }}" {% if get_data.status == label %} selected {% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="form-outline mb-4" data-mdb-input-init>
                         <input id="callbackdate" name="callbackdate" class="form-control form-control-lg" value="{{formatted_follow_up}}"/>
                         <label class="form-label" for="form12">Call Back Date</label>
                     </div>
                     <div class="mb-4">
-                        <div class="form-outline" data-mdb-input-init>
-                            <input list="business_types" id="bussinesstype" name="bussinesstype" class="form-control" value="{{get_data.business_type}}" />
-                            <label class="form-label" for="bussinesstype">Business Type</label>
-                            <datalist id="business_types">
-                                <option value="">Business Type</option>
-                                {% for value, label in BUSINESS_TYPE_CHOICES %}
-                                    <option value="{{ value }}">{{ label }}</option>
-                                {% endfor %}
-                            </datalist>
-                        </div>
+                        <select class="form-control" id="bussinesstype" name="bussinesstype">
+                            <option value="">Business Type</option>
+                            {% for value, label in BUSINESS_TYPE_CHOICES %}
+                            <option value="{{ value }}" {% if get_data.business_type == label %} selected {% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="form-outline" data-mdb-input-init>
                         <textarea class="form-control" id="Remarks" name="remarks" rows="2">{{get_data.remarks}}</textarea>
-                        <label class="form-label" for="Remarks">Remark</label>
+                        <label class="form-label" for="Remarks">Call Back Comments</label>
                     </div>
                 </div>
             </div>
