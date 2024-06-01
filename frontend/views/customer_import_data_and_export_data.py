@@ -7,35 +7,60 @@ from django.http import HttpResponse
 from openpyxl import Workbook
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/login')
 def customer_import_view(request):
     if request.method == 'POST':
         import_file = request.FILES.get('import_file')
         if import_file:
             if not import_file.name.endswith('.xlsx'):
                 messages.error(request, "Only Excel files (.xlsx) are supported.")
-                return redirect('coustomer')  # Redirect to appropriate URL
+                return redirect('coustomer')
 
             try:
                 df = pd.read_excel(import_file)
 
                 for index, row in df.iterrows():
-                    org_name = row.get('Company Name')
-
-                    # Handle Business Type
-                    business_type = row.get('Business type')
-                    if not business_type:
-                        messages.error(request, f"Error on row {index + 2}: Business Type is missing.")
-                        continue
-                    elif business_type not in dict(customertable.BUSINESS_TYPE_CHOICES).keys():
-                        messages.error(request, f"Error on row {index + 2}: Invalid Business Type '{business_type}'.")
-                        continue
-
                     try:
-                        org_type, _ = OrgType.objects.get_or_create(org_type=row.get('Company Type'))
-                        location, _ = Location.objects.get_or_create(location=row.get('Country'))
-                        city, _ = City.objects.get_or_create(city=row.get('City'))
-                        lead_name, _ = LeadTable.objects.get_or_create(Lead_Name=row.get('Refarrel Name'))
+                        org_name = row.get('Company Name')
+
+                        # Handle Business Type
+                        business_type = row.get('Business type')
+                        if not business_type:
+                            messages.error(request, f"Error on row {index + 2}: Business Type is missing.")
+                            continue
+                        elif business_type not in dict(customertable.BUSINESS_TYPE_CHOICES).keys():
+                            messages.error(request, f"Error on row {index + 2}: Invalid Business Type '{business_type}'.")
+                            continue
+
+                        # Get OrgType
+                        try:
+                            org_type = OrgType.objects.get(org_type=row.get('Company Type'))
+                        except OrgType.DoesNotExist:
+                            messages.error(request, f"Error on row {index + 2}: Company Type '{row.get('Company Type')}' does not exist.")
+                            continue
+
+                        # Get Location
+                        try:
+                            location = Location.objects.get(location=row.get('Country'))
+                        except Location.DoesNotExist:
+                            messages.error(request, f"Error on row {index + 2}: Country '{row.get('Country')}' does not exist.")
+                            continue
+
+                        # Get City
+                        try:
+                            city = City.objects.get(city=row.get('City'))
+                        except City.DoesNotExist:
+                            messages.error(request, f"Error on row {index + 2}: City '{row.get('City')}' does not exist.")
+                            continue
+
+                        # Get Lead Name
+                        try:
+                            lead_name = LeadTable.objects.get(Lead_Name=row.get('Refarrel Name'))
+                        except LeadTable.DoesNotExist:
+                            messages.error(request, f"Error on row {index + 2}: Referral Name '{row.get('Refarrel Name')}' does not exist.")
+                            continue
 
                         # Handle products
                         product_names = [p.strip() for p in str(row.get('Products')).split(',')]
@@ -45,14 +70,22 @@ def customer_import_view(request):
                         
                         selected_products = []
                         for product_name in product_names:
-                            product, _ = ProductTable.objects.get_or_create(Product_Name=product_name)
-                            selected_products.append(product)
+                            try:
+                                product = ProductTable.objects.get(Product_Name=product_name)
+                                selected_products.append(product)
+                            except ProductTable.DoesNotExist:
+                                messages.error(request, f"Error on row {index + 2}: Product '{product_name}' does not exist.")
+                                continue
 
                         # Handle end_of_date
-                        end_of_date = row.get('End of Date', timezone.now().date())
+                        end_of_date = row.get('End of Date')
+                        if pd.isnull(end_of_date):
+                            end_of_date = timezone.now().date()
 
                         # Handle follow_up
-                        follow_up_date_str = row.get('Follow up', timezone.now().date())
+                        follow_up_date_str = row.get('Follow up')
+                        if pd.isnull(follow_up_date_str):
+                            follow_up_date_str = timezone.now().date()
 
                         # Handle Company Name
                         if not org_name:
@@ -73,13 +106,13 @@ def customer_import_view(request):
                             city=city,
                             lead_name=lead_name,
                             business_type=business_type,
-                            amount=int(row.get('Budget', '')),
+                            amount=int(row.get('Budget', 0)),
                             end_of_date=end_of_date,
                             priority=row.get('Priority', ''),
                             mail_id=row.get('Email', ''),
                             status=row.get('Status', ''),
                             comment=row.get('Additional Remarks', ''),
-                            remarks=row.get('Call back comments', ''),
+                            remarks=row.get('Call Back Comments', ''),
                             follow_up=follow_up_date_str,
                             created_by=request.user,
                             updated_by=request.user,
@@ -88,13 +121,13 @@ def customer_import_view(request):
                         
                         # Create a new lead history entry
                         UserActivity.objects.create(
-                        user=request.user,
-                        timestamp=timezone.now(),
-                        lable = f"{new_customer.org_name}",
-                        action="Upload customers sheet",
-                        content_type=ContentType.objects.get_for_model(customertable),
-                        object_id=new_customer.pk,
-                    )
+                            user=request.user,
+                            timestamp=timezone.now(),
+                            lable=f"{new_customer.org_name}",
+                            action="Upload customers sheet",
+                            content_type=ContentType.objects.get_for_model(customertable),
+                            object_id=new_customer.pk,
+                        )
 
                     except Exception as e:
                         messages.error(request, f"Error creating customer on row {index + 2}: {str(e)}")
@@ -112,9 +145,9 @@ def customer_import_view(request):
 
     return redirect('coustomer')  # Redirect to appropriate URL
 
-
 # Export data
 
+@login_required(login_url='/login')
 def export_customer_data(request):
     # Query all coustomer
     Customers = customertable.objects.all()

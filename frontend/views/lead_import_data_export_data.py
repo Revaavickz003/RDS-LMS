@@ -5,7 +5,9 @@ import pandas as pd
 from datetime import datetime
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/login')
 def LeadImportView(request):
     if request.method == 'POST':
         import_file = request.FILES.get('import_file')
@@ -142,6 +144,7 @@ from django.http import HttpResponse
 from openpyxl import Workbook
 from frontend.models import Lead
 
+@login_required(login_url='/login')
 def export_leads_to_excel(request):
     # Query all leads
     leads = Lead.objects.all()
