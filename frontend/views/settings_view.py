@@ -5,19 +5,11 @@ from django.contrib import messages
 
 @login_required(login_url='/login')
 def setting(request):
-    Roles = Role.objects.all()
-    Departments = Department.objects.all()
-    Positions = Position.objects.all()
     Users = CustomUser.objects.all()
-    Teams = Team.objects.all()
 
     context = {
         'settings': 'activete',
-        "Roles": Roles,
-        "Departments": Departments,
-        "Positions": Positions,
         "Users": Users,
-        "Teams":Teams,
         "countrys":Location.objects.all(),
         "citys":City.objects.all(),
         "Referrals":LeadTable.objects.all(),

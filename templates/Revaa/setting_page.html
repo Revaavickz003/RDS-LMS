@@ -28,7 +28,7 @@ Dashboard | Revaa Degital Solition
             <div class="container">
                 <div class="d-flex align-items-center mt-5">
                     {% if user.employee_photo %}
-                    <img src="{{ user.employee_photo.url }}" width="150" style="border-radius: 50%;" />
+                    <img src="{{ user.employee_photo.url }}" width="150" style="border-radius: 50%; width: 100px; height: 100px;"/>
                     {% else %}
                     <div class="img-div-container box bg-light2 d-flex align-items-center justify-content-center"
                         style="width: 8rem; height: 8rem; border-radius: 50%; ">
@@ -52,15 +52,6 @@ Dashboard | Revaa Degital Solition
                             <p>{{user.employee_mobile_number}} | {{user.parent_number}}</p>
                             <p>{{user.date_of_birth}}</p>
                             <p>{{user.qualification}}</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 mb-lg-0 d-none d-lg-block">
-                        <h4>Education and Position</h4>
-                        <div class="bg-light2 rounded-3 p-3">
-                            <p>{{user.department}}</p>
-                            <p>{{user.team}}</p>
-                            <p>{{user.role}}</p>
-                            <p>{{user.position}}</p>
                         </div>
                     </div>
                 </div>
