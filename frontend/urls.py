@@ -30,6 +30,7 @@ urlpatterns = [
     path('crm/leads/<int:pk>/edit/',view_single_lead.view_sing_lead, name='editlead'),
     path('crm/leads/filter/', leads_filter_view.ledas_filter, name="ledas_filter"),
     path('crm/leads/import/', lead_import_data_export_data.LeadImportView, name='lead_import'),
+    path('import-progress/', lead_import_data_export_data.get_import_progress, name='import_progress'),
     path('crm/leads/export/', lead_import_data_export_data.export_leads_to_excel, name='export_leads'),
     path('crm/lead/comvert/coustomer/<int:id>/', convert_customer.convert_customer, name='convertocustomer'),
 
