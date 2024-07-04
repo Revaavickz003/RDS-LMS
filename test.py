@@ -17,7 +17,7 @@ def generate_random_dates(start_date, end_date, n):
     return pd.to_datetime(np.random.randint(start_u, end_u, n), unit='s')
 
 # Set the number of entries
-n = 10000
+n = 500
 
 # Generate data
 data = {
