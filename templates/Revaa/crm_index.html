@@ -25,7 +25,7 @@ Dashboard | Revaa Degital Solition
             <div class="col-sm-4">
                 <a href="{% url 'without_view' %}">
                     <div class="box bg-light2 border-secondary mb-3">
-                        <div class="card-header">Prospective Leads</div>
+                        <div class="card-header">Monthly Leads (JAN)</div>
                         <div class="card-body d-flex"
                             style="display: flex; align-items: start; justify-content: space-between;">
                             <h1 class="fs-1">{{with_out_customer}}</h1>
@@ -36,9 +36,54 @@ Dashboard | Revaa Degital Solition
             <div class="col-sm-4">
                 <a href="{% url 'coustomer' %}">
                     <div class="box bg-light2 border-secondary mb-3">
-                        <div class="card-header">Converted Leads</div>
+                        <div class="card-header">Leads last 30 days</div>
                         <div class="card-body">
                             <h1 class="fs-1">{{over_all_customer}}</h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{% url 'leads' %}">
+                    <div class="box bg-light2 mb-3">
+                        <div class="card-header">Prospective Leads</div>
+                        <div class="card-body">
+                            <h1 class="fs-1">{{over_all_leads}}</h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-4">
+                <a href="{% url 'without_view' %}">
+                    <div class="box bg-light2 border-secondary mb-3">
+                        <div class="card-header">Future prospective</div>
+                        <div class="card-body d-flex"
+                            style="display: flex; align-items: start; justify-content: space-between;">
+                            <h1 class="fs-1">{{with_out_customer}}</h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-4">
+                <a href="{% url 'coustomer' %}">
+                    <div class="box bg-light2 border-secondary mb-3">
+                        <div class="card-header">Commercial leads</div>
+                        <div class="card-body">
+                            <h1 class="fs-1">{{over_all_customer}}</h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{% url 'leads' %}">
+                    <div class="box bg-light2 mb-3">
+                        <div class="card-header">Span Leads</div>
+                        <div class="card-body">
+                            <h1 class="fs-1">{{over_all_leads}}</h1>
                         </div>
                     </div>
                 </a>

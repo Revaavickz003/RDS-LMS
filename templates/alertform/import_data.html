@@ -1,5 +1,5 @@
-<div class="modal fade" id="importdata" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel"
-    aria-hidden="true">
+ <!-- Import Leads Modal -->
+ <div class="modal fade" id="importdata" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,7 +10,7 @@
                     customer
                     {% endif %}
                     data
-                    </h5>
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -22,82 +22,135 @@
                             <div class="row">
                                 <div class="col-12">
                                     {% if leads %}
-                                    <form action="{% url 'lead_import' %}" method="post" enctype="multipart/form-data">
-                                        {% else %}
-                                        <form action="{% url 'customer_import' %}" method="post" enctype="multipart/form-data">
-                                            {% endif %}
-                                            {% csrf_token %}
-                                            <div class="row">
-                                                <div class="col-12 col-lg-9">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <div class="card-title">
-                                                                Import 
-                                                                {% if leads %}
-                                                                leads
-                                                                {% else %}
-                                                                customer
-                                                                {% endif %}
-                                                                .xlsx only
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="form-group field-name">
-                                                                <div class="row">
-
-                                                                    <div class="col-sm-2 text-left">
-                                                                        <label for="id_import_file">File to
-                                                                            import:</label>
-                                                                    </div>
-                                                                    <div class="col-sm-10 text-left">
-                                                                        <input type="file" name="import_file"
-                                                                            class="guess_format form-control w-50"
-                                                                            required="" id="id_import_file">
-                                                                    </div>
-
-                                                                    <div class="help-block red">
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-12 col-lg-9">
-                                                                <p>
-                                                                    <b>This importer will import the following fields:
-                                                                    </b>
-                                                                </p>
-                                                                <ul>
-
-                                                                </ul>
-                                                                <p></p>
-                                                            </div>
+                                    <form id="importLeadsForm" action="{% url 'lead_import' %}" method="post" enctype="multipart/form-data">
+                                    {% else %}
+                                    <form id="importLeadsForm" action="{% url 'customer_import' %}" method="post" enctype="multipart/form-data">
+                                    {% endif %}
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-12 col-lg-9">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="card-title">
+                                                            Import 
+                                                            {% if leads %}
+                                                            leads
+                                                            {% else %}
+                                                            customer
+                                                            {% endif %}
+                                                            .xlsx only
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-12 col-lg-3">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <p class="card-title">
-                                                                <i class="fas fa-edit"></i>
-                                                                Actions
-                                                            </p>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="form-group">
-                                                                <input type="submit" class="btn btn-success w-100"
-                                                                    name="confirm" value="Submit">
+                                                    <div class="card-body">
+                                                        <div class="form-group field-name">
+                                                            <div class="row">
+
+                                                                <div class="col-sm-2 text-left">
+                                                                    <label for="id_import_file">File to
+                                                                        import:</label>
+                                                                </div>
+                                                                <div class="col-sm-10 text-left">
+                                                                    <input type="file" name="import_file"
+                                                                        class="guess_format form-control w-50"
+                                                                        required="" id="id_import_file">
+                                                                </div>
+
+                                                                <div class="help-block red">
+
+                                                                </div>
                                                             </div>
+                                                        </div>
+
+                                                        <div class="col-12 col-lg-9">
+                                                            <p>
+                                                                <b>This importer will import the following fields:
+                                                                </b>
+                                                            </p>
+                                                            <ul>
+
+                                                            </ul>
+                                                            <p></p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
-                                </div>
+                                            <div class="col-12 col-lg-3">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <p class="card-title">
+                                                            <i class="fas fa-edit"></i>
+                                                            Actions
+                                                        </p>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="form-group">
+                                                            <input type="submit" class="btn btn-success w-100"
+                                                                name="confirm" value="Submit">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="progress mt-3" style="height: 25px;">
+                                        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                    </div>
+                                    <p id="progressStatus" class="mt-2"></p>
                             </div>
-                        </section>
-                    </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importdata">
+    Import Leads
+</button>
+
+<script>
+    document.getElementById('importLeadsForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('POST', this.action, true);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+        xhr.upload.addEventListener('progress', function(e) {
+            if (e.lengthComputable) {
+                const percentComplete = (e.loaded / e.total) * 100;
+                document.getElementById('progressBar').style.width = percentComplete + '%';
+                document.getElementById('progressBar').textContent = Math.floor(percentComplete) + '%';
+            }
+        });
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                updateProgress();
+            }
+        };
+
+        xhr.send(formData);
+        setTimeout(updateProgress, 500);
+    });
+
+    function updateProgress() {
+        fetch('{% url "import_progress" %}')
+            .then(response => response.json())
+            .then(data => {
+                const progress = data.saved / data.total * 100;
+                document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('progressBar').textContent = Math.floor(progress) + '%';
+                document.getElementById('progressStatus').textContent = `Saved: ${data.saved}, Failed: ${data.failed}, Total: ${data.total}`;
+
+                if (!data.complete) {
+                    setTimeout(updateProgress, 500);
+                } else {
+                    document.getElementById('progressStatus').textContent += ' - Import Complete';
+                }
+            });
+    }
+</script>
