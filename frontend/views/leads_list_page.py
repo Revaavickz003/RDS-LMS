@@ -121,16 +121,13 @@ def crm_page_view(request):
 
     context = {
         "leads": "activete",
+        'leadslistpage':True,
         'All_Leads': Lead.objects.all(),
         "Org_Type": OrgType.objects.all(),
         "Locations": Location.objects.all(),
         "citys": City.objects.all(),
-        "lead_names": LeadTable.objects.all(),
         "BUSINESS_TYPE_CHOICES": Lead.BUSINESS_TYPE_CHOICES,
         "Products": ProductTable.objects.all(),
-        "Prioritys": Lead.PRIORITY_CHOICES,
-        "Statuss": Lead.STATUS_CHOICES,
-        'Org_Name': OrgName.objects.all(),
         "users": CustomUser.objects.filter(is_admin=True, is_active=True),
     }
 
@@ -141,6 +138,7 @@ def crm_page_view(request):
 def without_view(request):
     context = {
         "leads": "activete",
+        'leadspage':'leadspage',
         'All_Leads': Lead.objects.filter(is_customer=False),
         "Org_Type": OrgType.objects.all(),
         "Locations": Location.objects.all(),

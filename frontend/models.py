@@ -103,6 +103,7 @@ class Lead(models.Model):
     DO_NOT_DISTURB = 'Do Not Disturb'
     FOLLOW_UP = 'Follow up'
     PROPOSED = 'Proposed'
+    NOT_INTERESTED = 'Not Interested'
     HOLD = 'Hold'
     CLOSED = 'Closed'
     STATUS_CHOICES = [
@@ -111,6 +112,7 @@ class Lead(models.Model):
         (DO_NOT_DISTURB, 'Do Not Disturb'),
         (FOLLOW_UP, 'Follow up'),
         (PROPOSED, 'Proposed'),
+        (NOT_INTERESTED, 'Not Interested'),
         (HOLD, 'Hold'),
         (CLOSED, 'Closed'),
     ]
@@ -222,7 +224,7 @@ class customertable(models.Model):
     remarks = models.TextField(max_length=100)
     follow_up = models.DateField()
     created_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='custoner_created', null=True)
-    created_date = models.DateField(auto_now_add=True)
+    created_date = models.DateField(null=True, blank=True)
     updated_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='customer_updated_by', null=True)
     updated_date = models.DateField(auto_now=True)
 

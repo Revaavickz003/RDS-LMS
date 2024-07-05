@@ -1,31 +1,59 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from frontend.models import *
+from datetime import datetime, timedelta
+from collections import Counter
 
 @login_required(login_url='/login')
 def maindashbord_page_view(request):
+    leads = Lead.objects.all()
+    lead_status_counts = Counter(leads.values_list('status', flat=True))
+    lead_statuses = list(lead_status_counts.keys())
+    lead_status_values = list(lead_status_counts.values())
 
-    # Retrieve lead products
-    lead_products = ProductTable.objects.filter(lead__isnull=False).distinct()
-    lead_product_counts = [lead_product.lead_set.count() for lead_product in lead_products]
+    # This month Leads count
+    this_month_leads =leads.filter(created_date__month=datetime.now().month, created_date__year=datetime.now().year)
+    this_month_leads_count = this_month_leads.count()
+    prev_month_leads = leads.filter(created_date__month=datetime.now().month-1)
+    prev_month_leads_count = prev_month_leads.count()
+    diff = this_month_leads_count - prev_month_leads_count
 
-    # Retrieve customer products
-    customer_products = ProductTable.objects.filter(customertable__isnull=False).distinct()
-    customer_product_counts = [customer_product.customertable_set.count() for customer_product in customer_products]
+    # Last 30 days Leads
+    last_30_days_leads = leads.filter(created_date__gte=datetime.now() - timedelta(days=30))
+    last_30_days_leads_count = last_30_days_leads.count()
 
-    # Combine product names from both sources
-    lead_product_names = list(lead_products.values_list('Product_Name', flat=True))
-    customer_product_names = list(customer_products.values_list('Product_Name', flat=True))
 
-    # Combine product counts from both sources
-    lead_product_counts = lead_product_counts
-    customer_product_counts = customer_product_counts
+    # Prospective Leads
+    prospective_leads = leads.filter(status__in=['Fresh', 'Follow up', 'Proposed', 'Hold', 'Closed'])
+    prospective_leads_count = prospective_leads.count()
+
+    # Future prospective
+    Monthly_prospective = this_month_leads.filter(status__in=['Fresh', 'Follow up', 'Proposed', 'Hold', 'Closed'])
+    Monthly_prospective_count = Monthly_prospective.count()
+
+    # Commercial leads
+    last_30_days_prospective = last_30_days_leads.filter(status__in=['Fresh', 'Follow up', 'Proposed', 'Hold', 'Closed'])
+    last_30_days_prospective_count = last_30_days_prospective.count()
+
+    # Span Leads
+    span_leads_count = Lead.objects.filter(status__in=['Closed', 'Not Interested' 'Do Not Disturb'])
+    span_leads_count = span_leads_count.count()
+
+                                                               
+
     context = {
         'leaddashbord':'activete',
-        'lead_products': lead_product_names,
-        'lead_product_counts': lead_product_counts,
-        'customer_products': customer_product_names,
-        'customer_product_counts': customer_product_counts,
+        'this_month': datetime.now().strftime("%b").upper(),
+        'this_month_leads_count':this_month_leads_count,
+        'prev_month_leads_count_diff':diff,
+        'last_30_days_leads_count':last_30_days_leads_count,
+        'prospective_leads_count':prospective_leads_count,
+        'Monthly_prospective_count':Monthly_prospective_count,
+        'last_30_days_prospective_count':last_30_days_prospective_count,
+        'span_leads_count':span_leads_count,
+
+        'lead_statuses': lead_statuses,
+        'lead_status_values': lead_status_values,
         'over_all_leads': Lead.objects.all().count(),
         'over_all_customer': customertable.objects.all().count(),
         'convert_to_customer': Lead.objects.filter(is_customer=True).count(),

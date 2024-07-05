@@ -21,6 +21,7 @@ n = 500
 
 # Generate data
 data = {
+    "Date" : generate_random_dates(pd.to_datetime('2024-01-01'), pd.to_datetime('2024-07-05'), n),
     "Client Name": [fake.name() for _ in range(n)],
     "Client Number": [generate_indian_phone_number() for _ in range(n)],
     "Org Name": [fake.company() for _ in range(n)],
@@ -31,13 +32,13 @@ data = {
     "Products": [random.choice(['Branding', 'Design', 'SMM', 'Website', 'CRM', 'Google Ads', 'Meta Ads', 'Video Editing', 'Marketing']) for _ in range(n)],
     "Proposal Amount": [random.randint(1000, 100000) for _ in range(n)],
     "Finally Budget": [random.randint(1000, 100000) for _ in range(n)],
-    "End of Date": generate_random_dates(pd.to_datetime('2023-01-01'), pd.to_datetime('2024-07-04'), n),
+    "End of Date": generate_random_dates(pd.to_datetime('2024-01-01'), pd.to_datetime('2024-07-04'), n),
     "Priority": [random.choice(['High', 'Medium', 'Low']) for _ in range(n)],
     "Email": [fake.email() for _ in range(n)],
     "Status": [random.choice(['Fresh', 'Call Back', 'Do Not Disturb', 'Follow up', 'Proposed', 'Hold', 'Closed']) for _ in range(n)],
     "Additional Remarks": [fake.sentence() for _ in range(n)],
     "Call Back Comments": [fake.sentence() for _ in range(n)],
-    "Call Back": generate_random_dates(pd.to_datetime('2023-01-01'), pd.to_datetime('2024-07-04'), n),
+    "Call Back": generate_random_dates(pd.to_datetime('2024-01-01'), pd.to_datetime('2024-07-04'), n),
     "Referral Name": [random.choice(['Arun Kumar', 'Ravi Kumar', 'Vignesh', 'Sathish', 'Prasath']) for _ in range(n)]
 }
 

@@ -96,6 +96,16 @@ def LeadImportView(request):
                                 call_back_date_str = datetime.fromtimestamp(call_back_date_str).date()
                             else:
                                 call_back_date_str = datetime.strptime(str(call_back_date_str).split()[0], '%Y-%m-%d').date()
+                        
+                        # Handle Created Date
+                        date_of_join = row.get('Date', '')
+                        if not date_of_join:
+                            date_of_join = datetime.now().date()
+                        else:
+                            if isinstance(date_of_join, float):
+                                date_of_join = datetime.fromtimestamp(date_of_join).date()
+                            else:
+                                date_of_join = datetime.strptime(str(date_of_join).split()[0], '%Y-%m-%d').date()
 
                         # Handle Company Name
                         if not company_name:
@@ -134,7 +144,7 @@ def LeadImportView(request):
                             call_back=call_back_date_str,
                             created_by=request.user,
                             updated_by=request.user,
-                            created_date=datetime.now().date(),
+                            created_date=date_of_join,
                             updated_date=datetime.now().date(),
                         )
                         new_lead.products.set(selected_products)
