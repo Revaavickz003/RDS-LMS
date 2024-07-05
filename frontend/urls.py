@@ -16,6 +16,7 @@ from frontend.views import (
     customer_import_data_and_export_data,
     customer_filter,
     basic_functions,
+    leads_filter,
     )
 
 urlpatterns = [
@@ -58,6 +59,13 @@ urlpatterns = [
     path('logout/', login_page_view.logout_page, name='logout_page'),
     path('darkmood/', basic_functions.darkmood, name='darkmood'),
 
+    # Filter
+    path('leads/thismonthleads/', leads_filter.thismonthleads, name='thismonthleads'),
+    path('leads/last30days/', leads_filter.last30days, name='last30days'),
+    path('leads/prospective_leads/', leads_filter.prospective_leads, name='prospective_leads'),
+    path('leads/monthly_prospective/', leads_filter.monthly_prospective, name='monthly_prospective'),
+    path('leads/last_30_days_prospective/', leads_filter.last_30_days_prospective, name='last_30_days_prospective'),
+    path('leads/span_leads/', leads_filter.span_leads, name='span_leads'),
+
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
