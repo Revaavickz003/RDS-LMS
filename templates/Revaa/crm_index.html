@@ -28,7 +28,7 @@ Dashboard | Revaa Degital Solition
                         <div class="card-header">Monthly Leads ({{this_month}})</div>
                         <div class="card-body d-flex align-items-end"
                             style="display: flex; align-items: start; justify-content: space-between;">
-                            <h1 class="fs-1">{{this_month_leads_count}} <span class="fs-4">/ {{with_out_customer}}</span> </h1>
+                            <h1 class="fs-1">{{this_month_leads_count}} <span class="fs-4">/ {{over_all_leads}}</span> </h1>
                             {% if 0 > prev_month_leads_count_diff %}
                             <span class="text-danger">{{prev_month_leads_count_diff}} <i class='bx bx-trending-down'></i></span>
                             {% else %}
@@ -43,7 +43,7 @@ Dashboard | Revaa Degital Solition
                     <div class="box bg-light2 border-secondary mb-3">
                         <div class="card-header">Leads last 30 days</div>
                         <div class="card-body">
-                            <h1 class="fs-1">{{last_30_days_leads_count}} <span class="fs-4">/ {{with_out_customer}}</span> </h1>
+                            <h1 class="fs-1">{{last_30_days_leads_count}} <span class="fs-4">/ {{over_all_leads}}</span> </h1>
                         </div>
                     </div>
                 </a>
@@ -55,7 +55,7 @@ Dashboard | Revaa Degital Solition
                     <div class="box bg-light2 mb-3">
                         <div class="card-header">Prospective Leads</div>
                         <div class="card-body">
-                            <h1 class="fs-1">{{prospective_leads_count}} <span class="fs-4">/ {{with_out_customer}}</span> </h1>
+                            <h1 class="fs-1">{{prospective_leads_count}} <span class="fs-4">/ {{over_all_leads}}</span> </h1>
                         </div>
                     </div>
                 </a>
@@ -74,7 +74,7 @@ Dashboard | Revaa Degital Solition
             <div class="col-sm-4">
                 <a href="{% url 'last_30_days_prospective' %}">
                     <div class="box bg-light2 border-secondary mb-3">
-                        <div class="card-header">last 30 days prospective</div>
+                        <div class="card-header">30 days prospective</div>
                         <div class="card-body">
                             <h1 class="fs-1">{{last_30_days_prospective_count}} <span class="fs-4">/ {{last_30_days_leads_count}}</span> </h1>
                         </div>
@@ -93,26 +93,7 @@ Dashboard | Revaa Degital Solition
                     </div>
                 </a>
             </div>
-            <div class="col-sm-4">
-                <a href="{% url 'span_leads' %}">
-                    <div class="box bg-light2 mb-3">
-                        <div class="card-header">Span Leads</div>
-                        <div class="card-body">
-                            <h1 class="fs-1">{{span_leads_count}} <span class="fs-4">/ {{with_out_customer}}</span> </h1>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-4">
-                <a href="{% url 'span_leads' %}">
-                    <div class="box bg-light2 mb-3">
-                        <div class="card-header">Span Leads</div>
-                        <div class="card-body">
-                            <h1 class="fs-1">{{span_leads_count}} <span class="fs-4">/ {{with_out_customer}}</span> </h1>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            
         </div>
 
         <div class="col-sm-6">

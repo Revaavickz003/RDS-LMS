@@ -5,6 +5,7 @@ from frontend.models import Lead, OrgType, Location, City, LeadTable, ProductTab
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
+from datetime import date, datetime
 
 @login_required(login_url='/login')
 def crm_page_view(request):
@@ -118,11 +119,25 @@ def crm_page_view(request):
         except Exception as e:
             messages.error(request, f"{e}")
             return redirect('leads')
-
+        
+    current_date = datetime.now()
+    # Determine the start and end of the financial year
+    if current_date.month >= 4:  # April or later
+        fiscal_year_start = date(current_date.year, 4, 1)
+        fiscal_year_end = date(current_date.year + 1, 3, 31)
+    else:  # Before April
+        fiscal_year_start = date(current_date.year - 1, 4, 1)
+        fiscal_year_end = date(current_date.year, 3, 31)
+    
+    # Filter leads within the financial year
+    fiscal_year_leads = Lead.objects.filter(
+        created_date__gte=fiscal_year_start,
+        created_date__lte=fiscal_year_end
+    )
     context = {
         "leads": "activete",
         'leadslistpage':True,
-        'All_Leads': Lead.objects.all(),
+        'All_Leads': fiscal_year_leads,
         "Org_Type": OrgType.objects.all(),
         "Locations": Location.objects.all(),
         "citys": City.objects.all(),
