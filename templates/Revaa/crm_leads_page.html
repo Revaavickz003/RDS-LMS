@@ -2,7 +2,27 @@
 {% load static %}
 
 {% block title %}
-Leads Page | Revaa Digital Solution
+{% if leadslistpage %}
+    Leads Page
+    {% endif %}
+    {% if thismonthleads %}
+    Monthly Leads
+    {% endif %}
+    {% if last30days %}
+    Last 30 Leads
+    {% endif %}
+    {% if last_30_days_prospective %}
+    Last 30 days Prospective Leads
+    {% endif %}
+    {% if Span_Leads %}
+    Span Leads
+    {% endif %}
+    {% if prospective_leads %}
+    Prospective Leads
+    {% endif %}
+    {% if monthly_prospective %}
+    Monthly Prospective Leads
+    {% endif %} | Revaa Digital Solution
 {% endblock %}
 
 {% block content %}
@@ -11,23 +31,23 @@ Leads Page | Revaa Digital Solution
     {% if leadslistpage %}
     <h4>Leads Page</h4>
     {% endif %}
-    {% if thismonthteads %}
+    {% if thismonthleads %}
     <h4>Monthly Leads</h4>
     {% endif %}
-    {% if span_leads_count %}
+    {% if last30days %}
     <h4>Last 30 Leads</h4>
     {% endif %}
-    {% if Commercial_leads %}
-    <h4>Commercial Leads</h4>
-    {% endif %}
-    {% if Future_prospective %}
-    <h4>Future Prospective Leads</h4>
-    {% endif %}
-    {% if Prospective_Leads %}
+    {% if prospective_leads %}
     <h4>Prospective Leads</h4>
     {% endif %}
-    {% if last30days %}
-    <h4>Prospective Leads</h4>
+    {% if monthly_prospective %}
+    <h4>Monthly Prospective Leads</h4>
+    {% endif %}
+    {% if last_30_days_prospective %}
+    <h4>Last 30 days Prospective Leads</h4>
+    {% endif %}
+    {% if Span_Leads %}
+    <h4>Span Leads</h4>
     {% endif %}
 <div>
     {% if leadslistpage %}
@@ -52,7 +72,7 @@ Leads Page | Revaa Digital Solution
     {% if All_Leads %}
         <form action="{% url 'ledas_filter' %}" method="post">
             {% csrf_token %}
-            <div class="row">
+            <div class="row align-items-end">
                 <div class="col-md-2 mb-2">
                     <div class="form-outline me-2" data-mdb-input-init>
                         <input type="date" id="Fromdate" name="Fromdate" class="form-control" />
@@ -66,40 +86,49 @@ Leads Page | Revaa Digital Solution
                     </div>
                 </div>
                 <div class="col-md-2 mb-2">
-                    <div class="form-outline" data-mdb-input-init>
-                        <input type="date" id="todate" name="todate" class="form-control" />
-                        <label class="form-label" for="todate">To Date</label>
-                    </div>
+                    <select name="Org_Type" id="Org_Type" class="form-control">
+                        <option value="">Select Org Type</option>
+                        {% for Org_Type in Org_Type %}
+                        <option value="{{Org_Type}}">{{Org_Type}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="col-md-2 mb-2">
-                    <div class="form-outline" data-mdb-input-init>
-                        <input type="date" id="todate" name="todate" class="form-control" />
-                        <label class="form-label" for="todate">To Date</label>
-                    </div>
+                    <select name="country" id="country" class="form-control">
+                        <option value="">Select country</option>
+                        {% for country in Locations %}
+                        <option value="{{country}}">{{country}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="col-md-2 mb-2">
-                    <div class="form-outline" data-mdb-input-init>
-                        <input type="date" id="todate" name="todate" class="form-control" />
-                        <label class="form-label" for="todate">To Date</label>
-                    </div>
+                    <select name="City" id="City" class="form-control">
+                        <option value="">Select City</option>
+                        {% for city in citys %}
+                        <option value="{{city}}">{{city}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="col-md-2 mb-2">
-                    <div class="form-outline" data-mdb-input-init>
-                        <input type="date" id="todate" name="todate" class="form-control" />
-                        <label class="form-label" for="todate">To Date</label>
-                    </div>
+                    <select name="Business" id="Business" class="form-control">
+                        <option value="">Select Business Type</option>
+                        {% for business in BUSINESS_TYPE_CHOICES %}
+                            <option value="{{ business.1 }}">{{ business.1 }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="col-md-2 mb-2">
-                    <div class="form-outline" data-mdb-input-init>
-                        <input type="date" id="todate" name="todate" class="form-control" />
-                        <label class="form-label" for="todate">To Date</label>
-                    </div>
+                    <select name="Services" id="Services" class="form-control">
+                        <option value="">Select Services</option>
+                        {% for service in Products %}
+                        <option value="{{service}}">{{service}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="col-md-2 mb-2">
-                    <input type="submit" value="Filter" class="btn btn-primary mx-2">
+                    <input type="submit" value="Filter" class="btn btn-primary">
                 </div>
             </div>
-            
         </form>
     {% endif %}
 </div>
