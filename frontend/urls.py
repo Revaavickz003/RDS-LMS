@@ -20,7 +20,6 @@ from frontend.views import (
     )
 
 urlpatterns = [
-
     # sidebar Views
     path('', crm_dashboard.maindashbord_page_view, name="crmdashboard"),
     path('setting/', settings_view.setting, name='setting'),
@@ -66,6 +65,5 @@ urlpatterns = [
     path('leads/monthly_prospective/', leads_filter.monthly_prospective, name='monthly_prospective'),
     path('leads/last_30_days_prospective/', leads_filter.last_30_days_prospective, name='last_30_days_prospective'),
     path('leads/span_leads/', leads_filter.span_leads, name='span_leads'),
-
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

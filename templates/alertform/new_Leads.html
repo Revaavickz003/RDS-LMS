@@ -135,7 +135,7 @@
                             <div class="mb-4">
                                 <select id="Prioritys" name="Prioritys" class="form-control">
                                     <option value="">Priority</option>
-                                    {% for value, label in Prioritys %}
+                                    {% for value, label in PRIORITY_CHOICES %}
                                     <option value="{{ value }}">{{ label }}</option>
                                     {% endfor %}
                                 </select>
@@ -155,7 +155,7 @@
                             <div class="mb-4">
                                 <select id="satus" name="satus" class="form-control">
                                     <option value="">Select Status</option>
-                                    {% for value, label in Statuss %}
+                                    {% for value, label in STATUS_CHOICES %}
                                     <option value="{{ value }}">{{ label }}</option>
                                     {% endfor %}
                                 </select>

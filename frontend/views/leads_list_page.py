@@ -142,6 +142,8 @@ def crm_page_view(request):
         "Locations": Location.objects.all(),
         "citys": City.objects.all(),
         "BUSINESS_TYPE_CHOICES": Lead.BUSINESS_TYPE_CHOICES,
+        "STATUS_CHOICES": Lead.STATUS_CHOICES,
+        "PRIORITY_CHOICES": Lead.PRIORITY_CHOICES,
         "Products": ProductTable.objects.all(),
         "users": CustomUser.objects.filter(is_admin=True, is_active=True),
     }

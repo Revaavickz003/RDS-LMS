@@ -13,9 +13,6 @@ def user_image_upload_path(instance, username):
 def lead_and_customer_companylogo(instance, org_name):
     return f'Leads and Customer/{instance.org_name}/{org_name}'
 
-
-
-
 class CustomUser(AbstractUser):
     Employee_id = models.CharField(max_length=10, unique=True, null=True, blank=True)
     username = models.CharField(max_length=150, unique=True)
