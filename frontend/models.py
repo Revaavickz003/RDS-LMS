@@ -131,7 +131,7 @@ class Lead(models.Model):
     ]
 
     client_name = models.CharField(max_length=20)
-    client_number = models.IntegerField()
+    client_number = models.BigIntegerField()
     company_name = models.CharField(max_length=30)
     company_img = models.ImageField(upload_to='lead_and_customer_companylogo', null=True, blank=True)  # Corrected the upload_to argument
     company_type = models.ForeignKey(OrgType, on_delete=models.CASCADE)

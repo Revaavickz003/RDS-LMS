@@ -76,7 +76,7 @@
                                 <select id="Lead_Name" name="lead_name" class="form-control">
                                     <label class="form-label" for="Lead_Name">Referral Name</label>
                                     <option value="">Referral Name</option>
-                                    {% for lead_name in lead_names %}
+                                    {% for lead_name in ref_names %}
                                     <option value="{{ lead_name.Lead_Name }}">{{lead_name.Lead_Name}}</option>
                                     {% endfor %}
                                 </select>

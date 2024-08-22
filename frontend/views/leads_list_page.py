@@ -97,9 +97,9 @@ def crm_page_view(request):
                 call_back_comments=call_back_comments,
                 call_back=call_back,
                 created_by = request.user,
-                created_date = datetime.datetime.now(),
+                created_date = datetime.now(),
                 updated_by = request.user,
-                updated_date = datetime.datetime.now(),
+                updated_date = datetime.now(),
             )
 
             selected_products = ProductTable.objects.filter(Product_Name__in=selected_product_names)
@@ -144,6 +144,7 @@ def crm_page_view(request):
         "BUSINESS_TYPE_CHOICES": Lead.BUSINESS_TYPE_CHOICES,
         "STATUS_CHOICES": Lead.STATUS_CHOICES,
         "PRIORITY_CHOICES": Lead.PRIORITY_CHOICES,
+        "ref_names":LeadTable.objects.all(),
         "Products": ProductTable.objects.all(),
         "users": CustomUser.objects.filter(is_admin=True, is_active=True),
     }
